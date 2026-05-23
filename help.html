@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Logo VL Advanced</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+            --text: #333;
+            --code-bg: #eef2f3;
+            --border: #ddd;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar h2 { font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
+        .sidebar a { color: #bdc3c7; text-decoration: none; font-size: 0.9rem; padding: 5px 0; transition: 0.2s; }
+        .sidebar a:hover { color: white; padding-left: 5px; }
+        .back-btn { background: var(--accent); color: white !important; padding: 10px !important; border-radius: 4px; text-align: center; margin-top: auto; }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        h2 { color: var(--accent); margin-top: 40px; }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
+        th { background: var(--code-bg); color: var(--primary); font-size: 0.85rem; text-transform: uppercase; }
+        
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            color: #c7254e;
+            font-size: 0.9rem;
+        }
+        
+        .example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-family: monospace;
+            white-space: pre;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            background: var(--accent);
+            color: white;
+            margin-left: 5px;
+        }
+        .keyword { color: #bb86fc; font-weight: bold; }
+        .command { color: #03dac6; font-weight: bold; }
+        .variable { color: #ff9800; font-weight: bold; }
+        .comment { color: #75715e; font-style: italic; }
+        .icon { display: inline-block; min-width: 1.25em; text-align: center; font-weight: 700; }
+
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: none;
+                padding: 14px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .sidebar h2 {
+                flex-basis: 100%;
+                margin: 0 0 4px;
+                padding-bottom: 8px;
+            }
+
+            .sidebar a {
+                background: rgba(255,255,255,0.08);
+                border-radius: 4px;
+                padding: 8px 10px;
+            }
+
+            .sidebar a:hover {
+                padding-left: 10px;
+            }
+
+            .back-btn {
+                margin-top: 0;
+            }
+
+            .main-content {
+                overflow: visible;
+                padding: 24px 16px;
+            }
+
+            .card {
+                overflow-x: auto;
+                padding: 16px;
+            }
+
+            .example {
+                overflow-x: auto;
+                white-space: pre;
+            }
+        }
+
+        @media (max-width: 560px) {
+            h1 {
+                font-size: 1.55rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            th,
+            td {
+                padding: 9px;
+                vertical-align: top;
+            }
+
+            code {
+                word-break: keep-all;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <a href="#intro"><span class="icon" aria-hidden="true">i</span> Introduction</a>
+        <a href="#mouvement"><span class="icon" aria-hidden="true">↔</span> Mouvement</a>
+        <a href="#stylo"><span class="icon" aria-hidden="true">✎</span> Stylo & Couleurs</a>
+        <a href="#formes"><span class="icon" aria-hidden="true">◇</span> Formes</a>
+        <a href="#media"><span class="icon" aria-hidden="true">▣</span> Média & Texte</a>
+        <a href="#math"><span class="icon" aria-hidden="true">∑</span> Mathématiques</a>
+        <a href="#structures"><span class="icon" aria-hidden="true">{}</span> Contrôle & Boucles</a>
+        <a href="#variables"><span class="icon" aria-hidden="true">x</span> Variables & Procédures</a>
+        <a href="#avance"><span class="icon" aria-hidden="true">⚙</span> Avancé</a>
+        <a href="index.html" class="back-btn"><span class="icon" aria-hidden="true">←</span> Retour au code</a>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <section id="intro">
+                <h1>Documentation Logo VL Advanced</h1>
+                <p>Bienvenue dans la documentation du langage Logo VL Advanced. Ce langage utilise une syntaxe Logo classique sans parenthèses pour les commandes, tout en offrant des fonctionnalités modernes.</p>
+                <div class="card">
+                    <h3>Points clés :</h3>
+                    <ul>
+                        <li><strong>Majuscules automatiques :</strong> L'éditeur convertit automatiquement les commandes en majuscules (ex: <code>av 100</code> devient <code>AV 100</code>).</li>
+                        <li><strong>Séparateurs optionnels :</strong> Vous pouvez utiliser la virgule <code>,</code> pour séparer les paramètres (utile pour les nombres négatifs : <code>FPOS 10, -20</code>).</li>
+                        <li><strong>Arité intelligente :</strong> Les commandes savent combien d'arguments elles attendent (<code>AV SIN 90</code> est compris comme <code>AV(sin(90))</code>).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="mouvement">
+                <h2><span class="icon" aria-hidden="true">↔</span> Mouvement</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>Commande</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>AV n</code></td><td>Avance de <code>n</code> pas. (Alias: <code>FD</code>)</td></tr>
+                            <tr><td><code>RE n</code></td><td>Recule de <code>n</code> pas. (Alias: <code>BK</code>)</td></tr>
+                            <tr><td><code>TD deg</code></td><td>Tourne à droite de <code>deg</code> degrés. (Alias: <code>RT</code>)</td></tr>
+                            <tr><td><code>TG deg</code></td><td>Tourne à gauche de <code>deg</code> degrés. (Alias: <code>LT</code>)</td></tr>
+                            <tr><td><code>FPOS x y</code></td><td>Déplace la tortue à <code>(x, y)</code>. (Alias: <code>SETXY</code>)</td></tr>
+                            <tr><td><code>FCAP deg</code></td><td>Définit le cap à <code>deg</code>. (Alias: <code>SETHEADING</code>)</td></tr>
+                            <tr><td><code>POSX</code>, <code>POSY</code></td><td>Retourne la coordonnée X ou Y actuelle.</td></tr>
+                            <tr><td><code>CAP</code></td><td>Retourne l'angle actuel. (Alias: <code>HEADING</code>)</td></tr>
+                            <tr><td><code>DISTANCE x y</code></td><td>Retourne la distance vers <code>(x, y)</code>.</td></tr>
+                            <tr><td><code>TOWARDS x y</code></td><td>Retourne l'angle pour pointer vers <code>(x, y)</code>.</td></tr>
+                            <tr><td><code>HOME</code></td><td>Retourne au centre (0, 0). (Alias: <code>ORIGINE</code>)</td></tr>
+                            <tr><td><code>VE</code></td><td>Vide l'écran et réinitialise la tortue. (Alias: <code>CS</code>)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="stylo">
+                <h2><span class="icon" aria-hidden="true">✎</span> Stylo & Couleurs</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>Commande</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>LC</code></td><td>Lève le stylo. (Alias: <code>PU</code>)</td></tr>
+                            <tr><td><code>BC</code></td><td>Abaisse le stylo. (Alias: <code>PD</code>)</td></tr>
+                            <tr><td><code>FCC couleur</code></td><td>Couleur du trait (nom, #hex, ou <code>RVB</code>). (Alias: <code>SETCOLOR</code>)</td></tr>
+                            <tr><td><code>FCB couleur</code></td><td>Couleur de remplissage. (Alias: <code>FILLCOLOR</code>)</td></tr>
+                            <tr><td><code>FTC n</code></td><td>Épaisseur du trait. (Alias: <code>SETWIDTH</code>)</td></tr>
+                            <tr><td><code>REMPLIS</code></td><td>Remplit la zone fermée actuelle. (Alias: <code>FILL</code>)</td></tr>
+                            <tr><td><code>FCA couleur</code></td><td>Couleur du fond. (Alias: <code>CANVASCOLOR</code>)</td></tr>
+                            <tr><td><code>OPACITE n</code></td><td>Définit l'opacité (0.0 à 1.0).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="formes">
+                <h2><span class="icon" aria-hidden="true">◇</span> Formes</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>Commande</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>CERCLE r</code></td><td>Trace un cercle de rayon <code>r</code>.</td></tr>
+                            <tr><td><code>ARC a r</code></td><td>Trace un arc de <code>a</code> degrés et rayon <code>r</code>.</td></tr>
+                            <tr><td><code>RECTANGLE w h</code></td><td>Trace un rectangle de <code>w</code> par <code>h</code>.</td></tr>
+                            <tr><td><code>ELLIPSE w h</code></td><td>Trace une ellipse.</td></tr>
+                            <tr><td><code>POLYGONE n t</code></td><td>Trace un polygone de <code>n</code> côtés et taille <code>t</code>.</td></tr>
+                            <tr><td><code>ETOILE p r1 r2</code></td><td>Trace une étoile à <code>p</code> branches.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="media">
+                <h2><span class="icon" aria-hidden="true">▣</span> Média & Texte</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>Commande</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>ECRIS "texte"</code></td><td>Affiche du texte dans le terminal.</td></tr>
+                            <tr><td><code>AFFICHEIMAGE url [x y w h]</code></td><td>Affiche une image sur le canevas.</td></tr>
+                            <tr><td><code>JOUE url</code></td><td>Joue un fichier audio.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="math">
+                <h2><span class="icon" aria-hidden="true">∑</span> Mathématiques</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>Fonction</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>SIN deg</code>, <code>COS deg</code>, <code>TAN deg</code></td><td>Trigonométrie (en degrés).</td></tr>
+                            <tr><td><code>HASARD n</code></td><td>Nombre aléatoire entre 0 et <code>n</code>. (Alias: <code>RANDOM</code>)</td></tr>
+                            <tr><td><code>RACINE n</code></td><td>Racine carrée. (Alias: <code>SQRT</code>)</td></tr>
+                            <tr><td><code>n1 ^ n2</code></td><td>Puissance (ex: <code>2 ^ 3</code> pour 8).</td></tr>
+                            <tr><td><code>MODULO a b</code></td><td>Reste de la division.</td></tr>
+                            <tr><td><code>RVB r v b</code></td><td>Crée une couleur (0-255). (Alias: <code>RGB</code>)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="structures">
+                <h2><span class="icon" aria-hidden="true">{}</span> Contrôle</h2>
+                <div class="card">
+                    <h3>REPETE n [ ... ]</h3>
+                    <div class="example"><span class="keyword">REPETE</span> 36 [ <span class="command">AV</span> 10 <span class="command">TD</span> 10 ]</div>
+                    
+                    <h3>SI condition [ ... ] SINON [ ... ]</h3>
+                    <div class="example"><span class="keyword">SI</span> (:x > 10) [ <span class="command">AV</span> 100 ] <span class="keyword">SINON</span> [ <span class="command">RE</span> 100 ]</div>
+
+                    <h3>TANTQUE condition [ ... ]</h3>
+                    <div class="example"><span class="keyword">TANTQUE</span> (:x < 100) [ <span class="variable">:x</span>++ ]</div>
+
+                    <h3>CHOISIS val [ CASE v1 [ ... ] AUTRES [ ... ] ]</h3>
+                    <div class="example"><span class="keyword">CHOISIS</span> (:c) [
+  <span class="keyword">CASE</span> "rouge" [ <span class="command">FCC</span> "red" ]
+  <span class="keyword">AUTRES</span> [ <span class="command">FCC</span> "black" ]
+]</div>
+                </div>
+            </section>
+
+            <section id="variables">
+                <h2><span class="icon" aria-hidden="true">x</span> Variables & Procédures</h2>
+                <div class="card">
+                    <h3>Variables</h3>
+                    <p>Déclaration avec <code>DONNE</code> ou affectation directe.</p>
+                    <div class="example"><span class="keyword">DONNE</span> <span class="variable">:x</span> 10
+<span class="variable">:y</span> = 20
+<span class="variable">:x</span> += 5</div>
+
+                    <h3>Procédures</h3>
+                    <div class="example"><span class="keyword">POUR</span> TRIANGLE <span class="variable">:t</span>
+  <span class="keyword">REPETE</span> 3 [ <span class="command">AV</span> <span class="variable">:t</span> <span class="command">TD</span> 120 ]
+<span class="keyword">FIN</span>
+
+TRIANGLE 100</div>
+
+                    <h3>Récursivité</h3>
+                    <div class="example"><span class="keyword">POUR</span> ARBRE <span class="variable">:t</span>
+  <span class="keyword">SI</span> :t < 5 [ <span class="keyword">STOP</span> ]
+  <span class="command">AV</span> :t
+  <span class="command">TG</span> 30 ARBRE :t * 0.7
+  <span class="command">TD</span> 60 ARBRE :t * 0.7
+  <span class="command">TG</span> 30 <span class="command">RE</span> :t
+<span class="keyword">FIN</span></div>
+                </div>
+            </section>
+
+            <section id="avance">
+                <h2><span class="icon" aria-hidden="true">⚙</span> Avancé</h2>
+                <div class="card">
+                    <h3>Classes</h3>
+                    <div class="example"><span class="keyword">CLASSE</span> Point [
+  constructeur [ <span class="variable">this.x</span> = 0 ]
+  setX [ <span class="keyword">DONNE</span> <span class="variable">this.x</span> 10 ]
+]</div>
+                    <h3>Opérateurs</h3>
+                    <p>Supports des opérateurs : <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>^</code>, <code>++</code>, <code>--</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>==</code>, <code>!=</code>, <code>></code>, <code><</code>, <code>>=</code>, <code><=</code>.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
