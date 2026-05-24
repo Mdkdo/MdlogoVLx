@@ -1,4 +1,140 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const bundledExamples = [
+        {
+            title: "Spirale",
+            file: "examples/spirale.logo",
+            code: "DONNE :i 0\nTANTQUE (:i < 100) [\n  AV (:i * 2)\n  TD 91\n  DONNE :i (:i + 1)\n]"
+        },
+        {
+            title: "Hexagone rempli",
+            file: "examples/hexagone-rempli.logo",
+            code: "FCC \"bleu\"\nFCB \"cyan\"\nREPETE 6 [\n  AV 80\n  TD 60\n]\nREMPLIS"
+        },
+        {
+            title: "Texte sur canvas",
+            file: "examples/texte-canvas.logo",
+            code: "FCC \"noir\"\nLC\nFPOS -250 120\nBC\nECRIS \"Bonjour depuis le canvas. Ce texte revient automatiquement a la ligne quand il atteint le bord.\"\nRETOURLIGNE\nLOG \"Ce message va dans le terminal.\""
+        },
+        {
+            title: "Tableau",
+            file: "examples/tableau.logo",
+            code: "DONNE :noms TABLEAU\nTAB_AJOUTE :noms \"Logo\"\nTAB_AJOUTE :noms \"Tortue\"\nTAB_AJOUTE :noms \"Canvas\"\nTAB_MODIFIE :noms 1 \"Dessin\"\nLC\nFPOS -120 60\nBC\nECRIS TAB_TEXTE :noms\nLOG TAB_TAILLE :noms"
+        },
+        {
+            title: "Pause",
+            file: "examples/pause.logo",
+            code: "REPETE 12 [\n  AV 40\n  TD 30\n  PAUSE 250\n]"
+        },
+        {
+            title: "Primitives",
+            file: "examples/primitives.logo",
+            code: "DONNE :nom LIS \"Ton nom ?\"\nMSG :nom\n\nDONNE :n _NOMBRE \"42\"\nDONNE :liste _TABLEAU \"1, 2, 3\"\nDONNE :mots _S_TABLEAU \"bonjour, phrase avec virgule\\, ici, fin\"\n\nLIGNE -200 -120 200 -120\nRECT -180 -80 -80 20\nELIP 40 -80 180 20\nPIXEL 0 0 \"rouge\"\n\nLC\nFPOS -200 90\nBC\nECRIS _TEXTE :n\nRETOURLIGNE\nECRIS TAB_TEXTE :liste\nRETOURLIGNE\nECRIS TAB_TEXTE :mots"
+        },
+		{
+			title: "Arbre",
+			file:"examples/",
+			code:"POUR ARBRE :t\n" +
+"  DONNE :cc 150-:t\n" +
+"  FCC RVB :cc :cc :cc\n" +
+"  SI :t < 5 [\n" +
+"    FCC 'vert'\n" +
+"    CERCLE 2\n" +
+"    RENDS\n" +
+"  ]\n" +
+"  FTC :t/10\n" +
+"  FCC 'noir'\n" +
+"  AV :t/3\n" +
+"  TG 30 ARBRE :t * 0.7\n" +
+"  TD 60 ARBRE :t * 0.7\n" +
+"  FCC 'noir'\n" +
+"  FTC :t/10\n" +
+"  TG 30 RE :t/3\n" +
+"FIN\n" +
+"\n" +
+"LC FPOS 0, -200 BC\n" +
+"\n" +
+"ARBRE 400"
+		},
+		{
+			title: "Drapeau",
+			file:"examples/drapeau.logo",
+			code:"CT \n"+
+"FTC 5\n"+
+"FCB 'rouge'\n"+ 
+"LC FPOS -220, -105 BC\n"+  
+"RECTANGLE 500 300\n"+
+"REMPLIS \n"+
+"LC FPOS 0 0 BC\n"+
+"TD 17\n"+
+"FTC 1\n"+
+"REPETE 125\n"+
+"[\n"+
+"  AV :_i0+100\n"+
+"  TD 144\n"+
+"  FCC RVB 0 :_i0*2 0\n"+
+"]\n"
+		},
+	{
+			title: "Pignon",
+			file:"examples/pignon.logo",
+			code:"DONNE :x 0\n"+
+"FTC 5\n"+
+"FCB 'gris'\n"+
+"TANTQUE (:x <+360) [ :x++\n"+
+"AV 20\n"+
+"SI(:x%3==0)[\n"+
+"TG 144\n"+
+"CONTINUE]\n"+
+"TD 60]\n"+
+"REMPLIS" 
+	}	,
+		{
+			title: "Sinusoïdal",
+			file:"examples/sinusoïdal.logo",
+			code:"DONNE :a -400\n"+
+"DONNE :s 0\n"+
+"DONNE :r 0\n"+
+"DONNE :g 0\n"+
+"DONNE :b 0\n"+
+"FTC 5\n"+
+"LC FPOS :a 0 BC\n"+ 
+"REPETE 1000\n"+
+"[\n"+
+"   :s= 100*cos(3.14*:a)\n"+
+"   FPOS :a :s \n"+
+"   :r=ABS(255*COS(3*:a))\n"+
+"   :g=ABS(255*sin(3.14*:a))\n"+
+"   :b=0\n"+    
+"   FCC RVB :r :g :b\n"+ 
+"   AV 2\n"+
+"   :a++\n"+
+"]"
+		},
+		{
+			title: "Conique",
+			file:"examples/conique.logo",
+			code:"DONNE :i 0\n"+
+"DONNE :j 0.01\n"+
+"FTC 3\n"+
+"CT \n"+
+"TANTQUE(:i<99000)\n"+
+"[\n"+
+"   FCC RVB 255 :j*89 :j*89\n"+
+"   AV :j TD 1\n"+
+"   SI(:i%360==0)[:j+=0.01]\n"+
+"   :i++\n"+
+"]"
+		}		
+    ];
+	
+	/*
+	,
+		{
+			title: "",
+			file:"examples/",
+			code:""
+		}
+		*/
     const app = document.getElementById('app');
     const canvas = document.getElementById('turtleCanvas');
     const turtleLayer = document.getElementById('turtleLayer');
@@ -8,8 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const w = container.parentElement.clientWidth - 32;
         const h = container.parentElement.clientHeight - 32;
         if (w <= 0 || h <= 0) return;
-        const width = Math.round(w * 0.95);
-        const height = Math.round(h * 0.95);
+        const width = Math.round(w * 0.97);
+        const height = Math.round(h * 0.97);
         canvasStage.style.width = `${width}px`;
         canvasStage.style.height = `${height}px`;
         if (window.turtle) window.turtle.resize(width, height);
@@ -39,6 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const codeEditor = document.getElementById('codeEditor');
     const themeSelect = document.getElementById('themeSelect');
     const runBtnTop = document.getElementById('runBtnTop'); const backToEditorBtn = document.getElementById('backToEditorBtn');
+    const exampleSelect = document.getElementById('exampleSelect');
+    const loadExampleBtn = document.getElementById('loadExampleBtn');
     const settingsBtn = document.getElementById('settingsBtn'); const settingsModal = document.getElementById('settings-modal');
     const closeModal = document.querySelector('.close-modal'); settingsBtn.addEventListener('click', () => { settingsModal.classList.remove('hidden'); });
     closeModal.addEventListener('click', () => { settingsModal.classList.add('hidden'); });
@@ -55,6 +193,25 @@ document.addEventListener('DOMContentLoaded', () => {
         window.updateHighlight();
     }
     settings.loadDraft(codeEditor);
+    bundledExamples.forEach((example, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = example.title;
+        exampleSelect.appendChild(option);
+    });
+    async function loadSelectedExample() {
+        const example = bundledExamples[Number(exampleSelect.value)];
+        if (!example) return;
+        try {
+            const response = await fetch(example.file);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            setEditorCode(await response.text());
+        } catch (err) {
+            setEditorCode(example.code);
+        }
+    }
+    loadExampleBtn.addEventListener('click', loadSelectedExample);
+    exampleSelect.addEventListener('change', loadSelectedExample);
     runBtnTop.addEventListener('click', () => { app.className = 'mode-execution'; prepareCanvasForRun(); window.runCode(); });
     backToEditorBtn.addEventListener('click', () => { app.className = 'mode-editor'; window.requestLogoStop(); });
     const newFileBtn = document.getElementById('newFileBtn'); const openFileBtn = document.getElementById('openFileBtn');
@@ -80,11 +237,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const pos = codeEditor.selectionStart;
         const lastChar = text.substring(pos - 1, pos);
         const separators = [' ', '\n', '\t', '[', ']', '(', ')', '{', '}', ',', ';'];
+        function isInsideStringOrComment(index) {
+            let quote = null;
+            let escaped = false;
+            let blockComment = false;
+            let lineComment = false;
+            for (let i = 0; i < index; i++) {
+                const ch = text[i];
+                const next = text[i + 1];
+                if (lineComment) {
+                    if (ch === '\n') lineComment = false;
+                    continue;
+                }
+                if (blockComment) {
+                    if (ch === '*' && next === '/') { blockComment = false; i++; }
+                    continue;
+                }
+                if (quote) {
+                    if (escaped) escaped = false;
+                    else if (ch === '\\') escaped = true;
+                    else if (ch === quote) quote = null;
+                    continue;
+                }
+                if (ch === '/' && next === '/') { lineComment = true; i++; continue; }
+                if (ch === '/' && next === '*') { blockComment = true; i++; continue; }
+                if (ch === '"' || ch === "'" || ch === '`') quote = ch;
+            }
+            return Boolean(quote || blockComment || lineComment);
+        }
         if (separators.includes(lastChar)) {
             const textBefore = text.substring(0, pos - 1);
             const wordMatch = textBefore.match(/([a-zA-Z0-9_$À-ÿ]+)$/);
             if (wordMatch) {
                 const word = wordMatch[1];
+                const start = pos - 1 - word.length;
+                if (isInsideStringOrComment(start)) return;
                 const upperWord = word.toUpperCase();
                 const allCaps = window.LOGO_ALL_CAPS || [];
                 const procSearch = text.replace(/("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^\\`]|\\.)*`|\/\/.*|\/\*[\s\S]*?\*\/)/g, "");
@@ -92,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userProcs = []; let m;
                 while ((m = procRegex.exec(procSearch)) !== null) { userProcs.push(m[1].toUpperCase()); }
                 if (allCaps.includes(upperWord) || userProcs.includes(upperWord)) {
-                    const start = pos - 1 - word.length;
                     const newText = text.substring(0, start) + upperWord + text.substring(pos - 1);
                     if (newText !== text) {
                         codeEditor.value = newText;
@@ -146,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
     commentBtn.addEventListener('click', () => { modifySelection(line => line.trim().startsWith('//') ? line.replace('// ', '').replace('//', '') : '// ' + line); });
     indentBtn.addEventListener('click', () => { modifySelection(line => '  ' + line); });
     unindentBtn.addEventListener('click', () => { modifySelection(line => line.replace(/^  ?/, '')); });
-    document.querySelectorAll('.example-btn').forEach(btn => { btn.addEventListener('click', () => { setEditorCode(btn.getAttribute('data-code')); }); });
     codeEditor.addEventListener('scroll', window.syncScroll);
     window.updateHighlight();
 });

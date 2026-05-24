@@ -1,0 +1,10 @@
+DONNE :x 0
+FTC 5
+FCB 'gris'
+TANTQUE (:x < 360) [ :x++
+AV 20
+SI(:x%3==0)[
+TG 144
+CONTINUE]
+TD 60]
+REMPLIS 

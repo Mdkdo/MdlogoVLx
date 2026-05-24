@@ -1,0 +1,22 @@
+
+POUR ARBRE :t
+  DONNE :cc 150-:t
+  FCC RVB :cc :cc :cc 
+  SI :t < 5 [
+FCC 'vert' 
+CERCLE 2
+ RENDS]
+  FTC :t/10
+  FCC 'noir' 
+  AV :t/3
+  TG 30 ARBRE :t * 0.7
+  TD 60 ARBRE :t * 0.7
+  FCC 'noir' 
+  FTC :t/10
+  TG 30 RE :t/3
+FIN
+LC FPOS 0, -200 BC
+ 
+ARBRE 400
+
+

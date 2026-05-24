@@ -1,0 +1,20 @@
+DONNE :nom LIS "Ton nom ?"
+MSG :nom
+
+DONNE :n _NOMBRE "42"
+DONNE :liste _TABLEAU "1, 2, 3"
+DONNE :mots _S_TABLEAU "bonjour, phrase avec virgule\, ici, fin"
+
+LIGNE -200 -120 200 -120
+RECT -180 -80 -80 20
+ELIP 40 -80 180 20
+PIXEL 0 0 "rouge"
+
+LC
+FPOS -200 90
+BC
+ECRIS _TEXTE :n
+RETOURLIGNE
+ECRIS TAB_TEXTE :liste
+RETOURLIGNE
+ECRIS TAB_TEXTE :mots

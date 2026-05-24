@@ -1,0 +1,22 @@
+CT 
+FTC 5
+FCB 'rouge' 
+LC FPOS -220, -105 BC  
+RECTANGLE 500 300
+REMPLIS 
+LC FPOS 0 0 BC 
+TD 17
+FTC 1
+REPETE 125
+[
+  AV :_i0+100
+  TD 144
+  FCC RVB 0 :_i0*2 0 
+]
+
+
+
+
+
+
+

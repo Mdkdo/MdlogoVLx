@@ -1,0 +1,6 @@
+DONNE :i 0
+TANTQUE (:i < 100) [
+  AV (:i * 2)
+  TD 91
+  DONNE :i (:i + 1)
+]

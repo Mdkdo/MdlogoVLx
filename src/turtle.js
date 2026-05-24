@@ -6,6 +6,9 @@ class Turtle {
         this.turtleCtx = turtleLayer ? turtleLayer.getContext('2d') : null;
         this.turtleImage = null;
         this.turtleStyle = 'default';
+        this.activeVideo = null;
+        this.activeVideoFrame = null;
+        this.activeAudio = null;
         this.reset();
     }
 
@@ -22,7 +25,11 @@ class Turtle {
         this.fillColor = '#000000';
         this.width = 1;
         this.visible = true;
-        this.fontName = '12px Arial';
+        this.fontSize = 12;
+        this.fontFamily = 'Arial';
+        this.fontWeight = 'normal';
+        this.fontStyle = 'normal';
+        this.updateFont();
         this.speed = 1000; // Fast by default
         this.isDrawingSmooth = false;
         
@@ -242,6 +249,34 @@ class Turtle {
         this.fontName = style;
     }
 
+    updateFont() {
+        this.fontName = `${this.fontStyle} ${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`;
+        this.textLineHeight = this.fontSize * 1.2;
+    }
+
+    setFontSize(size) {
+        const nextSize = Number(size);
+        if (Number.isFinite(nextSize) && nextSize > 0) {
+            this.fontSize = nextSize;
+            this.updateFont();
+        }
+    }
+
+    setFontStyle(style) {
+        const normalized = String(style).trim().toLowerCase();
+        this.fontWeight = normalized.includes('g') || normalized.includes('b') ? 'bold' : 'normal';
+        this.fontStyle = normalized.includes('i') ? 'italic' : 'normal';
+        this.updateFont();
+    }
+
+    setFontFamily(name) {
+        const cleanName = String(name).trim();
+        if (cleanName) {
+            this.fontFamily = cleanName.includes(' ') ? `"${cleanName}"` : cleanName;
+            this.updateFont();
+        }
+    }
+
     polygon(sides, size) {
         const deg = 360 / sides;
         for (let i = 0; i < sides; i++) {
@@ -383,6 +418,68 @@ class Turtle {
         img.src = url;
     }
 
+    drawImageBox(url, x1, y1, x2, y2) {
+        const img = new Image();
+        img.onload = () => {
+            const ux = Math.min(x1, x2);
+            const uy = Math.max(y1, y2);
+            const w = Math.abs(x2 - x1);
+            const h = Math.abs(y2 - y1);
+            this.ctx.drawImage(img, this.originX + ux, this.originY - uy, w, h);
+            this.draw();
+        };
+        img.src = url;
+    }
+
+    playVideo(url, x1, y1, x2, y2) {
+        this.stopVideo();
+        const video = document.createElement('video');
+        video.src = url;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        const ux = Math.min(x1, x2);
+        const uy = Math.max(y1, y2);
+        const w = Math.abs(x2 - x1);
+        const h = Math.abs(y2 - y1);
+        this.activeVideo = video;
+
+        const drawFrame = () => {
+            if (this.activeVideo !== video || video.paused || video.ended) return;
+            this.ctx.drawImage(video, this.originX + ux, this.originY - uy, w, h);
+            this.draw();
+            this.activeVideoFrame = requestAnimationFrame(drawFrame);
+        };
+
+        video.addEventListener('playing', drawFrame, { once: true });
+        video.play().catch(() => {});
+    }
+
+    stopVideo() {
+        if (this.activeVideoFrame) cancelAnimationFrame(this.activeVideoFrame);
+        this.activeVideoFrame = null;
+        if (this.activeVideo) {
+            this.activeVideo.pause();
+            this.activeVideo.src = "";
+        }
+        this.activeVideo = null;
+    }
+
+    playSound(url) {
+        this.stopSound();
+        const audio = new Audio(url);
+        this.activeAudio = audio;
+        audio.play().catch(() => {});
+    }
+
+    stopSound() {
+        if (!this.activeAudio) return;
+        this.activeAudio.pause();
+        this.activeAudio.currentTime = 0;
+        this.activeAudio = null;
+    }
+
     gradient(type, colors) {
         let grd;
         if (type === 'linear') {
@@ -415,9 +512,20 @@ class Turtle {
     }
 
     setxy(x, y) {
+        if (this.penDown) {
+            this.ctx.strokeStyle = this.color;
+            this.ctx.lineWidth = this.width;
+            this.ctx.lineCap = 'round';
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.originX + this.x, this.originY - this.y);
+            this.ctx.lineTo(this.originX + x, this.originY - y);
+            this.ctx.stroke();
+            this.currentPath.lineTo(this.originX + x, this.originY - y);
+        } else {
+            this.currentPath.moveTo(this.originX + x, this.originY - y);
+        }
         this.x = x;
         this.y = y;
-        this.currentPath.moveTo(this.originX + this.x, this.originY - this.y);
         this.draw();
     }
 
@@ -463,16 +571,66 @@ class Turtle {
     }
 
     pencolor(c) { this.setcolor(c); }
-    fillcolor(c) { this.fillColor = c; }
+    fillcolor(c) {
+        this.fillColor = c;
+        this.currentPath = new Path2D();
+        this.currentPath.moveTo(this.originX + this.x, this.originY - this.y);
+    }
     
     fill(color) {
         if (color) this.fillColor = color;
         this.ctx.fillStyle = this.fillColor;
         this.ctx.fill(this.currentPath);
+        this.currentPath = new Path2D();
+        this.currentPath.moveTo(this.originX + this.x, this.originY - this.y);
+    }
+
+    writeLine(text) {
+        const value = String(text);
+        const x = this.originX + this.x;
+        let y = this.originY - this.y;
+        const maxWidth = Math.max(40, this.canvas.width - x - 12);
+        const words = value.split(/\s+/);
+        const lines = [];
+        let line = "";
+
+        this.ctx.font = this.fontName;
+        for (const word of words) {
+            const test = line ? `${line} ${word}` : word;
+            if (this.ctx.measureText(test).width > maxWidth && line) {
+                lines.push(line);
+                line = word;
+            } else {
+                line = test;
+            }
+        }
+        lines.push(line);
+
+        this.ctx.fillStyle = typeof this.color === 'string' ? this.color : '#000000';
+        for (const textLine of lines) {
+            this.ctx.fillText(textLine, x, y);
+            y += this.textLineHeight;
+        }
+        this.y -= this.textLineHeight * lines.length;
+    }
+
+    newline(lines = 1) {
+        this.y -= this.textLineHeight * lines;
+        this.draw();
     }
 
     canvascolor(c) {
         this.canvas.style.backgroundColor = c;
+    }
+
+    setPixel(x, y, color) {
+        this.ctx.fillStyle = color;
+        this.ctx.fillRect(Math.round(this.originX + x), Math.round(this.originY - y), 1, 1);
+    }
+
+    getPixel(x, y) {
+        const data = this.ctx.getImageData(Math.round(this.originX + x), Math.round(this.originY - y), 1, 1).data;
+        return `rgba(${data[0]},${data[1]},${data[2]},${data[3] / 255})`;
     }
 
     draw() {

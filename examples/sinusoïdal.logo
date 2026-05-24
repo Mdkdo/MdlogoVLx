@@ -1,0 +1,20 @@
+DONNE :a -400
+DONNE :s 0
+DONNE :r 0
+DONNE :g 0
+DONNE :b 0
+FTC 5
+LC FPOS :a 0 BC 
+REPETE 1000
+[
+   :s= 100*cos(3.14*:a)
+   FPOS :a :s 
+   :r=ABS(255*COS(3*:a))
+   :g=ABS(255*sin(3.14*:a))
+   :b=0    
+   FCC RVB :r :g :b 
+   AV 2
+   :a++
+]
+
+

@@ -1,0 +1,18 @@
+DONNE :i 0
+DONNE :j 0.01
+FTC 3
+CT 
+TANTQUE(:i<99000)
+[
+   FCC RVB :j*89 :j*89 :j*89
+   AV :j TD 1
+   SI(:i%360==0)[:j+=0.01]
+   :i++
+]
+
+
+
+
+
+
+

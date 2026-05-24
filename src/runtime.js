@@ -25,7 +25,7 @@
         const helpers = {};
         const keys = global.LOGO_ALL_CAPS || [];
         keys.forEach(k => { if (global[k] !== undefined) helpers[k] = global[k]; });
-        ["fd", "bk", "rt", "lt", "pu", "pd", "cs", "clean", "home", "setcolor", "setwidth", "ps", "arc", "circle", "rectangle", "ellipse", "line", "write", "font", "polygon", "star", "stamp", "drawimage", "gradient", "opacity", "smooth", "setxy", "setheading", "ht", "st", "posx", "posy", "heading", "distance", "towards", "ds", "pencolor", "pc", "fillcolor", "fill", "canvascolor", "pi", "sqrt", "pow", "abs", "exp", "ln", "integer", "round", "ceil", "min", "max", "sin", "cos", "tan", "atan", "random", "mod", "rgb", "playsound", "showimage", "showvideo"].forEach(k => { if (global[k] !== undefined) helpers[k] = global[k]; });
+        ["fd", "bk", "rt", "lt", "pu", "pd", "cs", "clean", "home", "setcolor", "setwidth", "ps", "arc", "circle", "rectangle", "ellipse", "line", "rect", "elip", "write", "log", "msg", "newline", "pause", "font", "fontsize", "fontstyle", "fontname", "polygon", "star", "stamp", "drawimage", "gradient", "opacity", "smooth", "setxy", "setheading", "ht", "st", "posx", "posy", "heading", "distance", "towards", "ds", "pencolor", "pc", "fillcolor", "fill", "canvascolor", "pi", "sqrt", "pow", "abs", "exp", "ln", "integer", "round", "ceil", "min", "max", "sin", "cos", "tan", "atan", "random", "mod", "rgb", "playsound", "stopson", "showimage", "showvideo", "stopvideo", "toNumber", "toText", "tableFromText", "stringTableFromText", "pixel", "valpixel", "tableau", "ajoute", "modifie", "lis", "supprime", "taille", "vide", "texte"].forEach(k => { if (global[k] !== undefined) helpers[k] = global[k]; });
         helpers.console = {
             log: (...args) => global.logToTerminal(args.join(' '), 'log'),
             error: (...args) => global.logToTerminal(args.join(' '), 'error'),
@@ -42,7 +42,7 @@
         global.executeSnippet(code);
     };
 
-    global.executeSnippet = function(code) {
+    global.executeSnippet = async function(code) {
         global.resetLogoExecutionState();
         let preparedCode = global.translateLogoToJS(code);
         preparedCode = preparedCode.replace(/\^/g, '**');
@@ -60,8 +60,9 @@
             };
             const keys = Object.keys(helpers);
             const values = Object.values(helpers);
-            const execute = new Function(...keys, '"use strict";\n' + preparedCode);
-            execute(...values);
+            const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+            const execute = new AsyncFunction(...keys, '"use strict";\n' + preparedCode);
+            await execute(...values);
         } catch (err) {
             let lineNo = "Inconnue";
             if (err.stack) {

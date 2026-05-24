@@ -1,0 +1,7 @@
+FCC "bleu"
+FCB "cyan"
+REPETE 6 [
+  AV 80
+  TD 60
+]
+REMPLIS

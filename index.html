@@ -22,7 +22,7 @@
                     </select>
                     <button id="runBtnTop" class="primary"><span class="icon" aria-hidden="true">▶</span> Exécuter</button>
                     <button id="settingsBtn" title="Paramètres"><span class="icon" aria-hidden="true">⚙</span></button>
-                    <a href="https://clubannour.blogspot.com/p/mdlogovlhelp.html" target="_blank" class="help-link"><span class="icon" aria-hidden="true">?</span> Aide</a>
+                    <a href="help.html" target="_blank" class="help-link"><span class="icon" aria-hidden="true">?</span> Aide</a>
                 </div>
             </header>
 
@@ -70,6 +70,14 @@
                     </div>
                 </div>
                 
+                <div class="examples-bar">
+                    <label for="exampleSelect">Exemples</label>
+                    <select id="exampleSelect">
+                        <option value="">Choisir un exemple...</option>
+                    </select>
+                    <button id="loadExampleBtn" title="Charger l'exemple"><span class="icon" aria-hidden="true">▣</span> Charger</button>
+                </div>
+
                 <div id="editor-container">
                     <div id="line-numbers"></div>
                     <textarea id="codeEditor" spellcheck="false">REPETE 36 [
@@ -81,13 +89,6 @@
 ]</textarea>
                     <pre id="highlighting" aria-hidden="true"><code id="highlighting-content"></code></pre>
                 </div>
-            </div>
-
-            <div class="examples-bar">
-                <h3>Exemples :</h3>
-                <button class="example-btn" data-code="DONNE :i 0 TANTQUE (:i < 100) [ AV (:i * 2) TD 91 DONNE :i (:i + 1) ]">Spirale</button>
-                <button class="example-btn" data-code="FCC 'rouge' POLYGONE 6 50">Hexagone</button>
-                <button class="example-btn" data-code="ETOILE 5 100 40">Étoile</button>
             </div>
         </div>
 
@@ -137,7 +138,7 @@
                 </div>
             </div>
 
-            <div id="terminal-section">
+            <div id="terminal-section" class="terminal-popup hidden">
                 <div class="terminal-header">
                     <span>Terminal</span>
                     <div class="terminal-actions">
@@ -148,7 +149,7 @@
                 <div id="terminalOutput"></div>
             </div>
             
-            <button id="showTerminalBtn" class="hidden"><span class="icon" aria-hidden="true">&gt;_</span> Terminal</button>
+            <button id="showTerminalBtn"><span class="icon" aria-hidden="true">&gt;_</span> Terminal</button>
         </div>
     </div>
 

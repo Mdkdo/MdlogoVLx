@@ -49,6 +49,20 @@
         throw new Error(`Syntaxe Logo: ${message}`);
     }
 
+    function shouldConsumeOptionalArg(tokens, index, fullArityMap) {
+        let i = index;
+        let sawNewline = false;
+        while (i < tokens.length && tokens[i].trim() === "") {
+            if (tokens[i].includes('\n')) sawNewline = true;
+            i++;
+        }
+        if (sawNewline || i >= tokens.length) return false;
+        const token = tokens[i].trim();
+        if (!token || token === "]" || token === ")" || token === ";" || token === ",") return false;
+        if (isBinaryOperator(token)) return false;
+        return fullArityMap[token.toUpperCase()] === undefined;
+    }
+
     function transpileGroupedExpression(tokens, fullArityMap, userProcs) {
         let i = 0;
         let output = "";
@@ -105,7 +119,7 @@
                 if (endIdx !== -1) {
                     let bodyTokens = tokens.slice(j, endIdx);
                     let body = translateBlocks(bodyTokens.join(""), userProcs);
-                    output += `function ${name}(${params.join(', ')}) { ${body} }`;
+                    output += `async function ${name}(${params.join(', ')}) { ${body} }`;
                     i = endIdx; continue;
                 }
                 syntaxError(`FIN manquant pour la procedure ${name}`);
@@ -314,15 +328,31 @@
             }
             else { resultJS = token; currentIdx = i + 1; }
         } else {
+            let minArity = arity;
+            let maxArity = arity;
+            if (typeof arity === "string" && arity.includes("-")) {
+                const parts = arity.split("-").map(Number);
+                minArity = parts[0];
+                maxArity = parts[1];
+            }
             let args = []; currentIdx = i + 1;
-            for (let a = 0; a < arity; a++) {
+            for (let a = 0; a < minArity; a++) {
                 let sub = transpileOneCommand(tokens, currentIdx, fullArityMap, userProcs);
                 if (sub.js === "") syntaxError(`argument ${a + 1} manquant pour ${upper}`);
                 args.push(sub.js);
                 currentIdx = sub.nextIdx;
             }
+            for (let a = minArity; a < maxArity && shouldConsumeOptionalArg(tokens, currentIdx, fullArityMap); a++) {
+                let sub = transpileOneCommand(tokens, currentIdx, fullArityMap, userProcs);
+                if (sub.js === "") break;
+                args.push(sub.js);
+                currentIdx = sub.nextIdx;
+            }
             const commandName = arityMap[upper] !== undefined ? upper : token;
             resultJS = commandName + "(" + args.join(", ") + ")";
+            if (upper === "PAUSE" || arityMap[upper] === undefined) {
+                resultJS = "await " + resultJS;
+            }
         }
         while (currentIdx < tokens.length) {
             let nextTok = tokens[currentIdx]; let nt = nextTok.trim();

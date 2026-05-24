@@ -1,0 +1,7 @@
+FCC "noir"
+LC
+FPOS -250 120
+BC
+ECRIS "Bonjour depuis le canvas. Ce texte revient automatiquement a la ligne quand il atteint le bord."
+RETOURLIGNE
+LOG "Ce message va dans le terminal."

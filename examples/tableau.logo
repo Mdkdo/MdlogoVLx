@@ -1,0 +1,10 @@
+DONNE :noms TABLEAU
+TAB_AJOUTE :noms "Logo"
+TAB_AJOUTE :noms "Tortue"
+TAB_AJOUTE :noms "Canvas"
+TAB_MODIFIE :noms 1 "Dessin"
+LC
+FPOS -120 60
+BC
+ECRIS TAB_TEXTE :noms
+LOG TAB_TAILLE :noms
