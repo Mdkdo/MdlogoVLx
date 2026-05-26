@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 "FIN \n"+
 "CT \n"+
 "DONNE :i 0  DONNE :df 0  DONNE :dr -2 DONNE :d1 5  DONNE :d2 0  DONNE :speed 60\n"+
-"REPETE 380[:i+=:df  :d1+=4 :d2-=2 PAUSE :speed TD :dr CLEAN PIGNON :i 0 :d1 40 PIGNON :i+105 0 :d2 60]" 
+"REPETE 380[:i+=:df  :d1+=4 :d2-=2 PAUSE :speed TD :dr PIGNON :i-105 0 :d2 60 CLEAN PIGNON :i 0 :d1 40 PIGNON :i+105 0 :d2 60]" 
 	}	,
 		{
 			title: "Sinusoïdal",
