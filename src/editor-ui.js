@@ -77,16 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	{
 			title: "Pignon",
 			file:"examples/pignon.logo",
-			code:"DONNE :x 0\n"+
-"FTC 5\n"+
-"FCB 'gris'\n"+
-"TANTQUE (:x <+360) [ :x++\n"+
-"AV 20\n"+
-"SI(:x%3==0)[\n"+
-"TG 144\n"+
-"CONTINUE]\n"+
-"TD 60]\n"+
-"REMPLIS" 
+			code:"POUR PIGNON :xp :yp :d :r\n"+
+"  DONNE :n ENTIER(:r/2) \n"+
+"  FCAP :d FCC RVB 80 80 80 FTC :r/6 LC FPOS :xp :yp BC FCB RVB 50 50 120 \n"+
+"  REPETE :n[AV :r RE :r TD 360/:n] CERCLE :r-5 REMPLIS CERCLE :r/10 \n"+
+"FIN \n"+
+"CT \n"+
+"DONNE :i 0  DONNE :df 0  DONNE :dr -2 DONNE :d1 5  DONNE :d2 0  DONNE :speed 60\n"+
+"REPETE 380[:i+=:df  :d1+=4 :d2-=2 PAUSE :speed TD :dr CLEAN PIGNON :i 0 :d1 40 PIGNON :i+105 0 :d2 60]" 
 	}	,
 		{
 			title: "Sinusoïdal",
