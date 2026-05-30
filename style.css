@@ -405,3 +405,18 @@ button.danger { background: var(--danger-color); color: white; border: none; hei
         font-size: 12px;
     }
 }
+
+.toolbar .icon svg {
+    display: block;
+    vertical-align: middle;
+    /*color: #333;  ou var(--icon-color) */
+    transition: color 0.2s;
+}
+
+.toolbar button:hover .icon svg {
+    color: #6666ff;
+}
+
+.toolbar button:disabled .icon svg {
+    opacity: 0.4;
+}
