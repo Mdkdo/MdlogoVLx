@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation - Logo VL Advanced</title>
+    <title>Documentation de Référence - Logo VL Advanced</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2c3e50;
             --accent: #3498db;
-            --bg: #f4f7f6;
-            --text: #333;
-            --code-bg: #eef2f3;
-            --border: #ddd;
+            --bg: #f8fafc;
+            --sidebar-bg: #1e293b;
+            --text: #334155;
+            --code-bg: #f1f5f9;
+            --border: #e2e8f0;
+            --white: #ffffff;
         }
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             display: flex;
@@ -26,341 +31,808 @@
         
         /* Sidebar */
         .sidebar {
-            width: 250px;
-            background: var(--primary);
+            width: 280px;
+            background: var(--sidebar-bg);
             color: white;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
-        .sidebar h2 { font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
-        .sidebar a { color: #bdc3c7; text-decoration: none; font-size: 0.9rem; padding: 5px 0; transition: 0.2s; }
-        .sidebar a:hover { color: white; padding-left: 5px; }
-        .back-btn { background: var(--accent); color: white !important; padding: 10px !important; border-radius: 4px; text-align: center; margin-top: auto; }
+        .sidebar-header {
+            padding: 25px 20px;
+            background: rgba(0,0,0,0.2);
+        }
+        .sidebar h2 { 
+            font-size: 1.1rem; 
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 0;
+        }
+        .sidebar a { 
+            display: flex;
+            align-items: center;
+            color: #cbd5e1; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            padding: 10px 25px; 
+            transition: all 0.2s; 
+            border-left: 3px solid transparent;
+        }
+        .sidebar a:hover { 
+            color: white; 
+            background: rgba(255,255,255,0.05);
+            padding-left: 30px;
+        }
+        .sidebar a.active {
+            color: white;
+            border-left-color: var(--accent);
+            background: rgba(255,255,255,0.1);
+        }
+        .back-btn-container {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .back-btn { 
+            display: block;
+            background: var(--accent); 
+            color: white !important; 
+            padding: 12px !important; 
+            border-radius: 6px; 
+            text-align: center; 
+            font-weight: 600;
+        }
 
         /* Main Content */
         .main-content {
             flex: 1;
-            padding: 40px;
+            padding: 0;
             overflow-y: auto;
             scroll-behavior: smooth;
         }
-        .container { max-width: 900px; margin: 0 auto; }
-        
-        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
-        h2 { color: var(--accent); margin-top: 40px; }
-        
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 50px 40px;
         }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
-        th { background: var(--code-bg); color: var(--primary); font-size: 0.85rem; text-transform: uppercase; }
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 20px;
+        }
+
+        h1 { 
+            color: var(--primary); 
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        h2 { 
+            color: var(--primary); 
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 30px;
+            color: var(--primary);
+        }
+        
+        .card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 15px 0; 
+            background: var(--white);
+            min-width: 600px;
+        }
+        th, td { 
+            text-align: left; 
+            padding: 14px; 
+            border-bottom: 1px solid var(--border); 
+            vertical-align: top;
+        }
+        th { 
+            background: #f8fafc; 
+            color: #475569; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+        tr:last-child td { border-bottom: none; }
         
         code {
             background: var(--code-bg);
-            padding: 2px 6px;
+            padding: 3px 6px;
             border-radius: 4px;
-            font-family: 'Fira Code', monospace;
-            color: #c7254e;
-            font-size: 0.9rem;
+            font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            color: #e11d48;
+            font-size: 0.9em;
+            white-space: nowrap;
         }
         
+        td code {
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .example-block {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+        .example-header {
+            background: #334155;
+            color: #f1f5f9;
+            padding: 8px 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
         .example {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 5px;
-            font-family: monospace;
-            white-space: pre;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+            white-space: pre-wrap;
+            tab-size: 2;
         }
         
         .badge {
             display: inline-block;
             padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            background: var(--accent);
-            color: white;
-            margin-left: 5px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-right: 5px;
         }
-        .keyword { color: #bb86fc; font-weight: bold; }
-        .command { color: #03dac6; font-weight: bold; }
-        .variable { color: #ff9800; font-weight: bold; }
-        .comment { color: #75715e; font-style: italic; }
-        .icon { display: inline-block; min-width: 1.25em; text-align: center; font-weight: 700; }
+
+        .keyword { color: #c084fc; font-weight: bold; }
+        .command { color: #38bdf8; font-weight: bold; }
+        .variable { color: #fbbf24; font-weight: bold; }
+        .comment { color: #94a3b8; font-style: italic; }
+        
+        .icon { font-size: 1.2em; }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
 
         @media (max-width: 900px) {
-            body {
-                flex-direction: column;
-                height: auto;
-                min-height: 100vh;
-                overflow: auto;
-            }
-
-            .sidebar {
-                width: 100%;
-                max-height: none;
-                padding: 14px;
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .sidebar h2 {
-                flex-basis: 100%;
-                margin: 0 0 4px;
-                padding-bottom: 8px;
-            }
-
-            .sidebar a {
-                background: rgba(255,255,255,0.08);
-                border-radius: 4px;
-                padding: 8px 10px;
-            }
-
-            .sidebar a:hover {
-                padding-left: 10px;
-            }
-
-            .back-btn {
-                margin-top: 0;
-            }
-
-            .main-content {
-                overflow: visible;
-                padding: 24px 16px;
-            }
-
-            .card {
-                overflow-x: auto;
-                padding: 16px;
-            }
-
-            .example {
-                overflow-x: auto;
-                white-space: pre;
-            }
-        }
-
-        @media (max-width: 560px) {
-            h1 {
-                font-size: 1.55rem;
-            }
-
-            h2 {
-                font-size: 1.2rem;
-            }
-
-            th,
-            td {
-                padding: 9px;
-                vertical-align: top;
-            }
-
-            code {
-                word-break: keep-all;
-            }
+            body { flex-direction: column; overflow: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .sidebar-nav { display: flex; flex-wrap: wrap; }
+            .sidebar a { padding: 10px 15px; }
+            .main-content { overflow: visible; }
+            .container { padding: 20px; }
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2>Navigation</h2>
-        <a href="#intro"><span class="icon" aria-hidden="true">i</span> Introduction</a>
-        <a href="#mouvement"><span class="icon" aria-hidden="true">↔</span> Mouvement</a>
-        <a href="#stylo"><span class="icon" aria-hidden="true">✎</span> Stylo & Couleurs</a>
-        <a href="#formes"><span class="icon" aria-hidden="true">◇</span> Formes</a>
-        <a href="#media"><span class="icon" aria-hidden="true">▣</span> Média & Texte</a>
-        <a href="#math"><span class="icon" aria-hidden="true">∑</span> Mathématiques</a>
-        <a href="#structures"><span class="icon" aria-hidden="true">{}</span> Contrôle & Boucles</a>
-        <a href="#variables"><span class="icon" aria-hidden="true">x</span> Variables & Procédures</a>
-        <a href="#avance"><span class="icon" aria-hidden="true">⚙</span> Avancé</a>
-        <a href="index.html" class="back-btn"><span class="icon" aria-hidden="true">←</span> Retour au code</a>
+        <div class="sidebar-header">
+            <h2>Logo VL Advanced</h2>
+        </div>
+        <div class="sidebar-nav">
+            <a href="#mouvement"><span class="icon">↔️</span> Tortue & Mouvements</a>
+            <a href="#crayon"><span class="icon">🖍️</span> Crayon & Couleurs</a>
+            <a href="#ecran"><span class="icon">🖥️</span> Écran & Position</a>
+            <a href="#formes"><span class="icon">📐</span> Formes & Dessin</a>
+            <a href="#media"><span class="icon">🎥</span> Multimédia & Temps</a>
+            <a href="#texte"><span class="icon">💬</span> Texte & Entrées</a>
+            <a href="#maths"><span class="icon">🧮</span> Maths & Opérateurs</a>
+            <a href="#variables"><span class="icon">📦</span> Variables & Tableaux</a>
+            <a href="#controle"><span class="icon">🔄</span> Contrôle & Boucles</a>
+            <a href="#proced"><span class="icon">🏗️</span> Procédures & Classes</a>
+            <a href="#exemples_pratiques"><span class="icon">🌟</span> Exemples Pratiques</a>
+        </div>
+        <div class="back-btn-container">
+            <a href="index.html" class="back-btn">← Retour à l'Éditeur</a>
+        </div>
     </div>
 
     <div class="main-content">
         <div class="container">
             <section id="intro">
-                <h1>Documentation Logo VL Advanced</h1>
-                <p>Bienvenue dans la documentation du langage Logo VL Advanced. Ce langage utilise une syntaxe Logo classique sans parenthèses pour les commandes, tout en offrant des fonctionnalités modernes.</p>
+                <h1>Documentation de Référence</h1>
+                <p class="subtitle">Guide complet du langage Logo VL Advanced.</p>
+                
                 <div class="card">
-                    <h3>Points clés :</h3>
+                    <h3>Syntaxe de base</h3>
                     <ul>
-                        <li><strong>Majuscules automatiques :</strong> L'éditeur convertit automatiquement les commandes en majuscules (ex: <code>av 100</code> devient <code>AV 100</code>).</li>
-                        <li><strong>Séparateurs optionnels :</strong> Vous pouvez utiliser la virgule <code>,</code> pour séparer les paramètres (utile pour les nombres négatifs : <code>FPOS 10, -20</code>).</li>
-                        <li><strong>Arité intelligente :</strong> Les commandes savent combien d'arguments elles attendent (<code>AV SIN 90</code> est compris comme <code>AV(sin(90))</code>).</li>
+                        <li><strong>Variables :</strong> Débutent par <code>:</code> (ex: <code>:x</code>).</li>
+                        <li><strong>Commentaires :</strong> Débutent par <code>//</code>.</li>
+                        <li><strong>Sensibilité :</strong> Les commandes sont insensibles à la casse.</li>
                     </ul>
                 </div>
             </section>
 
             <section id="mouvement">
-                <h2><span class="icon" aria-hidden="true">↔</span> Mouvement</h2>
+                <h2><span class="icon">↔️</span> Tortue et Mouvements</h2>
                 <div class="card">
                     <table>
                         <thead>
-                            <tr><th>Commande</th><th>Description</th></tr>
+                            <tr><th>Commande (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>AV n</code></td><td>Avance de <code>n</code> pas. (Alias: <code>FD</code>)</td></tr>
-                            <tr><td><code>RE n</code></td><td>Recule de <code>n</code> pas. (Alias: <code>BK</code>)</td></tr>
-                            <tr><td><code>TD deg</code></td><td>Tourne à droite de <code>deg</code> degrés. (Alias: <code>RT</code>)</td></tr>
-                            <tr><td><code>TG deg</code></td><td>Tourne à gauche de <code>deg</code> degrés. (Alias: <code>LT</code>)</td></tr>
-                            <tr><td><code>FPOS x y</code></td><td>Déplace la tortue à <code>(x, y)</code>. (Alias: <code>SETXY</code>)</td></tr>
-                            <tr><td><code>FCAP deg</code></td><td>Définit le cap à <code>deg</code>. (Alias: <code>SETHEADING</code>)</td></tr>
-                            <tr><td><code>POSX</code>, <code>POSY</code></td><td>Retourne la coordonnée X ou Y actuelle.</td></tr>
-                            <tr><td><code>CAP</code></td><td>Retourne l'angle actuel. (Alias: <code>HEADING</code>)</td></tr>
-                            <tr><td><code>DISTANCE x y</code></td><td>Retourne la distance vers <code>(x, y)</code>.</td></tr>
-                            <tr><td><code>TOWARDS x y</code></td><td>Retourne l'angle pour pointer vers <code>(x, y)</code>.</td></tr>
-                            <tr><td><code>HOME</code></td><td>Retourne au centre (0, 0). (Alias: <code>ORIGINE</code>)</td></tr>
-                            <tr><td><code>VE</code></td><td>Vide l'écran et réinitialise la tortue. (Alias: <code>CS</code>)</td></tr>
+                            <tr><td><code>AV</code> / <code>FD n</code></td><td>Avancer de <code>n</code> pixels.</td><td><code>AV 100</code></td></tr>
+                            <tr><td><code>RE</code> / <code>BK n</code></td><td>Reculer de <code>n</code> pixels.</td><td><code>RE 50</code></td></tr>
+                            <tr><td><code>TD</code> / <code>RT angle</code></td><td>Tourner à droite de <code>angle</code> degrés.</td><td><code>TD 90</code></td></tr>
+                            <tr><td><code>TG</code> / <code>LT angle</code></td><td>Tourner à gauche de <code>angle</code> degrés.</td><td><code>TG 45</code></td></tr>
+                            <tr><td><code>CT</code> / <code>HT</code></td><td>Cache la tortue (Hide Turtle).</td><td><code>CT</code></td></tr>
+                            <tr><td><code>MT</code> / <code>ST</code></td><td>Montre la tortue (Show Turtle).</td><td><code>MT</code></td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <section id="stylo">
-                <h2><span class="icon" aria-hidden="true">✎</span> Stylo & Couleurs</h2>
+            <section id="crayon">
+                <h2><span class="icon">🖍️</span> Crayon</h2>
                 <div class="card">
                     <table>
                         <thead>
-                            <tr><th>Commande</th><th>Description</th></tr>
+                            <tr><th>Commande (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>LC</code></td><td>Lève le stylo. (Alias: <code>PU</code>)</td></tr>
-                            <tr><td><code>BC</code></td><td>Abaisse le stylo. (Alias: <code>PD</code>)</td></tr>
-                            <tr><td><code>FCC couleur</code></td><td>Couleur du trait (nom, #hex, ou <code>RVB</code>). (Alias: <code>SETCOLOR</code>)</td></tr>
-                            <tr><td><code>FCB couleur</code></td><td>Couleur de remplissage. (Alias: <code>FILLCOLOR</code>)</td></tr>
-                            <tr><td><code>FTC n</code></td><td>Épaisseur du trait. (Alias: <code>SETWIDTH</code>)</td></tr>
-                            <tr><td><code>REMPLIS</code></td><td>Remplit la zone fermée actuelle. (Alias: <code>FILL</code>)</td></tr>
-                            <tr><td><code>FCA couleur</code></td><td>Couleur du fond. (Alias: <code>CANVASCOLOR</code>)</td></tr>
-                            <tr><td><code>OPACITE n</code></td><td>Définit l'opacité (0.0 à 1.0).</td></tr>
+                            <tr><td><code>LC</code> / <code>PU</code></td><td>Lève le crayon (ne dessine plus).</td><td><code>LC</code></td></tr>
+                            <tr><td><code>BC</code> / <code>PD</code></td><td>Abaisse le crayon (dessine).</td><td><code>BC</code></td></tr>
+                            <tr><td><code>FCC</code> / <code>SETCOLOR couleur</code></td><td>Fixe la couleur du crayon.</td><td><code>FCC "rouge"</code></td></tr>
+                            <tr><td><code>FTC</code> / <code>SETWIDTH n</code></td><td>Fixe la taille (épaisseur) du crayon.</td><td><code>FTC 5</code></td></tr>
+                            <tr><td><code>PIXEL x y c</code></td><td>Allume le pixel <code>(x, y)</code> avec la couleur <code>c</code>.</td><td><code>PIXEL 10 10 "bleu"</code></td></tr>
+                            <tr><td><code>VALPIXEL x y</code></td><td>Retourne la couleur du pixel <code>(x, y)</code>.</td><td><code>DONNE :c VALPIXEL 0 0</code></td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Constantes de Couleurs</h3>
+                    <div class="color-grid">
+                        <div class="color-item"><div class="color-box" style="background:red"></div>'rouge'</div>
+                        <div class="color-item"><div class="color-box" style="background:green"></div>'vert'</div>
+                        <div class="color-item"><div class="color-box" style="background:blue"></div>'bleu'</div>
+                        <div class="color-item"><div class="color-box" style="background:yellow"></div>'jaune'</div>
+                        <div class="color-item"><div class="color-box" style="background:black"></div>'noir'</div>
+                        <div class="color-item"><div class="color-box" style="background:white"></div>'blanc'</div>
+                        <div class="color-item"><div class="color-box" style="background:pink"></div>'rose'</div>
+                        <div class="color-item"><div class="color-box" style="background:orange"></div>'orange'</div>
+                        <div class="color-item"><div class="color-box" style="background:purple"></div>'violet'</div>
+                        <div class="color-item"><div class="color-box" style="background:gray"></div>'gris'</div>
+                        <div class="color-item"><div class="color-box" style="background:brown"></div>'marron'</div>
+                        <div class="color-item"><div class="color-box" style="background:cyan"></div>'cyan'</div>
+                        <div class="color-item"><div class="color-box" style="background:magenta"></div>'magenta'</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ecran">
+                <h2><span class="icon">🖥️</span> Écran et Position</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>Commande (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>VE</code> / <code>CS</code></td><td>Vide l'écran et réinitialise la tortue.</td><td><code>VE</code></td></tr>
+                            <tr><td><code>NETTOIE</code> / <code>CLEAN</code></td><td>Efface le dessin sans bouger la tortue.</td><td><code>NETTOIE</code></td></tr>
+                            <tr><td><code>FCA</code> / <code>CANVASCOLOR couleur</code></td><td>Fixe la couleur de l'arrière-plan.</td><td><code>FCA "noir"</code></td></tr>
+                            <tr><td><code>FPOS</code> / <code>SETXY x y</code></td><td>Place la tortue à <code>(x, y)</code>.</td><td><code>FPOS 100 200</code></td></tr>
+                            <tr><td><code>FCAP</code> / <code>SETHEADING angle</code></td><td>Définit l'orientation absolue.</td><td><code>FCAP 180</code></td></tr>
+                            <tr><td><code>ORIGINE</code> / <code>HOME</code></td><td>Retourne au centre <code>(0, 0)</code>.</td><td><code>ORIGINE</code></td></tr>
+                            <tr><td><code>POSX</code> / <code>POSY</code></td><td>Retourne la coordonnée X ou Y actuelle.</td><td><code>LOG POSX</code></td></tr>
+                            <tr><td><code>CAP</code> / <code>HEADING</code></td><td>Retourne l'angle actuel de la tortue.</td><td><code>LOG CAP</code></td></tr>
+                            <tr><td><code>DISTANCE</code> / <code>DS x y</code></td><td>Retourne la distance entre la tortue et <code>(x, y)</code>.</td><td><code>LOG DISTANCE 0 0</code></td></tr>
+                            <tr><td><code>VERS</code> / <code>TOWARDS x y</code></td><td>Retourne l'angle nécessaire pour pointer vers <code>(x, y)</code>.</td><td><code>FCAP VERS 50 50</code></td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
             <section id="formes">
-                <h2><span class="icon" aria-hidden="true">◇</span> Formes</h2>
+                <h2><span class="icon">📐</span> Formes et Remplissage</h2>
                 <div class="card">
                     <table>
                         <thead>
-                            <tr><th>Commande</th><th>Description</th></tr>
+                            <tr><th>Commande (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>CERCLE r</code></td><td>Trace un cercle de rayon <code>r</code>.</td></tr>
-                            <tr><td><code>ARC a r</code></td><td>Trace un arc de <code>a</code> degrés et rayon <code>r</code>.</td></tr>
-                            <tr><td><code>RECTANGLE w h</code></td><td>Trace un rectangle de <code>w</code> par <code>h</code>.</td></tr>
-                            <tr><td><code>ELLIPSE w h</code></td><td>Trace une ellipse.</td></tr>
-                            <tr><td><code>POLYGONE n t</code></td><td>Trace un polygone de <code>n</code> côtés et taille <code>t</code>.</td></tr>
-                            <tr><td><code>ETOILE p r1 r2</code></td><td>Trace une étoile à <code>p</code> branches.</td></tr>
+                            <tr><td><code>LIGNE</code> / <code>LINE x1 y1 x2 y2</code></td><td>Trace une ligne entre deux points.</td><td><code>LIGNE 0 0 100 100</code></td></tr>
+                            <tr><td><code>RECT x1 y1 x2 y2</code></td><td>Trace un rectangle défini par ses coins.</td><td><code>RECT -50 -50 50 50</code></td></tr>
+                            <tr><td><code>ELIP x1 y1 x2 y2</code></td><td>Trace une ellipse définie par son rectangle englobant.</td><td><code>ELIP -100 -50 100 50</code></td></tr>
+                            <tr><td><code>CERCLE</code> / <code>CIRCLE r</code></td><td>Trace un cercle de rayon <code>r</code> centré sur la tortue.</td><td><code>CERCLE 75</code></td></tr>
+                            <tr><td><code>ARC angle r</code></td><td>Trace un arc de cercle.</td><td><code>ARC 90 50</code></td></tr>
+                            <tr><td><code>RECTANGLE w h</code></td><td>Trace un rectangle de largeur <code>w</code> et hauteur <code>h</code>.</td><td><code>RECTANGLE 120 80</code></td></tr>
+                            <tr><td><code>ELLIPSE w h</code></td><td>Trace une ellipse de largeur <code>w</code> et hauteur <code>h</code>.</td><td><code>ELLIPSE 100 60</code></td></tr>
+                            <tr><td><code>POLYGONE</code> / <code>POLYGON n t</code></td><td>Polygone régulier à <code>n</code> côtés de taille <code>t</code>.</td><td><code>POLYGONE 6 50</code></td></tr>
+                            <tr><td><code>ETOILE</code> / <code>STAR n r1 r2</code></td><td>Étoile à <code>n</code> branches avec rayons extérieur et intérieur.</td><td><code>ETOILE 5 50 20</code></td></tr>
+                            <tr><td><code>FCB</code> / <code>FILLCOLOR couleur</code></td><td>Fixe la couleur de remplissage.</td><td><code>FCB "jaune"</code></td></tr>
+                            <tr><td><code>REMPLIS</code> / <code>FILL</code></td><td>Remplit la dernière forme fermée tracée.</td><td><code>REMPLIS</code></td></tr>
+                            <tr><td><code>TAMPON</code> / <code>STAMP</code></td><td>Dessine l'image actuelle de la tortue sur le canevas.</td><td><code>TAMPON</code></td></tr>
+                            <tr><td><code>OPACITE</code> / <code>OPACITY n</code></td><td>Définit la transparence globale (0 à 1).</td><td><code>OPACITE 0.5</code></td></tr>
+                            <tr><td><code>FLUIDE</code> / <code>SMOOTH n</code></td><td>Active (1) ou désactive (0) l'animation fluide.</td><td><code>FLUIDE 1</code></td></tr>
+                            <tr><td><code>DEGRADE</code> / <code>GRADIENT type c1 c2 ...</code></td><td>Crée un dégradé (linear/radial).</td><td><code>DEGRADE "linear" "rouge" "bleu"</code></td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
             <section id="media">
-                <h2><span class="icon" aria-hidden="true">▣</span> Média & Texte</h2>
+                <h2><span class="icon">🎥</span> Multimédia et Temps</h2>
                 <div class="card">
                     <table>
                         <thead>
-                            <tr><th>Commande</th><th>Description</th></tr>
+                            <tr><th>Commande (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>ECRIS "texte"</code></td><td>Affiche du texte dans le terminal.</td></tr>
-                            <tr><td><code>AFFICHEIMAGE url [x y w h]</code></td><td>Affiche une image sur le canevas.</td></tr>
-                            <tr><td><code>JOUE url</code></td><td>Joue un fichier audio.</td></tr>
+            <tr><td><code>JOUE</code> / <code>LIRESON</code> / <code>PLAYSOUND url</code></td><td>Joue un fichier audio depuis une URL.</td><td><code>JOUE "https://.../son.mp3"</code></td></tr>
+                            <tr><td><code>STOPSON</code> / <code>STOPSOUND</code></td><td>Arrête toutes les lectures audio en cours.</td><td><code>STOPSON</code></td></tr>
+                            <tr><td><code>AFFICHEIMAGE</code> / <code>SHOWIMAGE url x y w h</code></td><td>Affiche une image aux coordonnées et dimensions données.</td><td><code>AFFICHEIMAGE "logo.png" 0 0 100 100</code></td></tr>
+            <tr><td><code>LIREVIDEO</code> / <code>AFFICHEVIDEO</code> / <code>SHOWVIDEO url x y w h</code></td><td>Joue une vidéo aux coordonnées spécifiées.</td><td><code>AFFICHEVIDEO "vid.mp4" 0 0 200 150</code></td></tr>
+                            <tr><td><code>STOPVIDEO</code></td><td>Arrête la lecture de la vidéo en cours.</td><td><code>STOPVIDEO</code></td></tr>
+                            <tr><td><code>PAUSE ms</code></td><td>Met en pause l'exécution pendant <code>ms</code> millisecondes.</td><td><code>PAUSE 1000</code></td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <section id="math">
-                <h2><span class="icon" aria-hidden="true">∑</span> Mathématiques</h2>
+            <section id="texte">
+                <h2><span class="icon">💬</span> Texte et Entrées</h2>
                 <div class="card">
                     <table>
                         <thead>
-                            <tr><th>Fonction</th><th>Description</th></tr>
+                            <tr><th>Commande</th><th>Description</th><th>Exemple</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><code>SIN deg</code>, <code>COS deg</code>, <code>TAN deg</code></td><td>Trigonométrie (en degrés).</td></tr>
-                            <tr><td><code>HASARD n</code></td><td>Nombre aléatoire entre 0 et <code>n</code>. (Alias: <code>RANDOM</code>)</td></tr>
-                            <tr><td><code>RACINE n</code></td><td>Racine carrée. (Alias: <code>SQRT</code>)</td></tr>
-                            <tr><td><code>n1 ^ n2</code></td><td>Puissance (ex: <code>2 ^ 3</code> pour 8).</td></tr>
-                            <tr><td><code>MODULO a b</code></td><td>Reste de la division.</td></tr>
-                            <tr><td><code>RVB r v b</code></td><td>Crée une couleur (0-255). (Alias: <code>RGB</code>)</td></tr>
+                            <tr><td><code>POLICE_TAILLE n</code></td><td>Définit la taille de la police pour <code>ECRIS</code>.</td><td><code>POLICE_TAILLE 24</code></td></tr>
+                            <tr><td><code>POLICE_STYLE s</code></td><td>Style : "g" (gras), "i" (italique), "gi" (les deux).</td><td><code>POLICE_STYLE "gi"</code></td></tr>
+                            <tr><td><code>POLICE_NOM n</code></td><td>Nom de la police (ex: "Arial", "Courier").</td><td><code>POLICE_NOM "Verdana"</code></td></tr>
+                            <tr><td><code>LOG val</code> / <code>PRINT val</code></td><td>Affiche une valeur dans la console ou le terminal.</td><td><code>LOG "Test"</code></td></tr>
+                            <tr><td><code>MSG texte</code></td><td>Affiche une boîte de message d'alerte.</td><td><code>MSG "Opération terminée"</code></td></tr>
+                            <tr><td><code>ECRIS texte</code> / <code>WRITE texte</code></td><td>Affiche le texte sur le canevas à la position de la tortue.</td><td><code>ECRIS "Bonjour"</code></td></tr>
+                            <tr><td><code>NL</code> / <code>RETOURLIGNE</code></td><td>Passe à la ligne suivante pour la commande <code>ECRIS</code>.</td><td><code>NL</code></td></tr>
+                            <tr><td><code>LIS msg</code></td><td>Demande une saisie texte à l'utilisateur via un prompt.</td><td><code>DONNE :nom LIS "Quel est votre nom ?"</code></td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <section id="structures">
-                <h2><span class="icon" aria-hidden="true">{}</span> Contrôle</h2>
+            <section id="maths">
+                <h2><span class="icon">🧮</span> Maths et Opérateurs</h2>
                 <div class="card">
-                    <h3>REPETE n [ ... ]</h3>
-                    <div class="example"><span class="keyword">REPETE</span> 36 [ <span class="command">AV</span> 10 <span class="command">TD</span> 10 ]</div>
-                    
-                    <h3>SI condition [ ... ] SINON [ ... ]</h3>
-                    <div class="example"><span class="keyword">SI</span> (:x > 10) [ <span class="command">AV</span> 100 ] <span class="keyword">SINON</span> [ <span class="command">RE</span> 100 ]</div>
+                    <table>
+                        <thead>
+                            <tr><th>Fonction (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>RACINE</code> / <code>SQRT n</code></td><td>Racine carrée de <code>n</code>.</td><td><code>RACINE 16</code> (→ 4)</td></tr>
+                            <tr><td><code>PUISSANCE</code> / <code>POW a b</code></td><td><code>a</code> élevé à la puissance <code>b</code>.</td><td><code>PUISSANCE 2 3</code> (→ 8)</td></tr>
+                            <tr><td><code>VALABS</code> / <code>ABS n</code></td><td>Valeur absolue de <code>n</code>.</td><td><code>ABS -10</code> (→ 10)</td></tr>
+                            <tr><td><code>EXP n</code></td><td>Exponentielle de <code>n</code>.</td><td><code>EXP 1</code> (→ 2.718...)</td></tr>
+                            <tr><td><code>LOGN</code> / <code>LN n</code></td><td>Logarithme népérien de <code>n</code>.</td><td><code>LOGN 10</code></td></tr>
+                            <tr><td><code>ENTIER</code> / <code>INTEGER n</code></td><td>Partie entière (tronquée) de <code>n</code>.</td><td><code>ENTIER 5.9</code> (→ 5)</td></tr>
+                            <tr><td><code>ARRONDI</code> / <code>ROUND n</code></td><td>Arrondi à l'entier le plus proche.</td><td><code>ARRONDI 5.6</code> (→ 6)</td></tr>
+                            <tr><td><code>PLAFOND</code> / <code>CEIL n</code></td><td>Plus petit entier supérieur ou égal à <code>n</code>.</td><td><code>PLAFOND 5.1</code> (→ 6)</td></tr>
+                            <tr><td><code>MIN a b</code> / <code>MAX a b</code></td><td>Minimum ou Maximum entre deux valeurs.</td><td><code>MIN 10 20</code> (→ 10)</td></tr>
+                            <tr><td><code>SIN</code>, <code>COS</code>, <code>TAN</code>, <code>ATAN</code></td><td>Fonctions trigonométriques (angles en degrés).</td><td><code>SIN 90</code> (→ 1)</td></tr>
+                            <tr><td><code>HASARD</code> / <code>RANDOM n</code></td><td>Nombre aléatoire entre 0 et <code>n</code>.</td><td><code>HASARD 100</code></td></tr>
+                            <tr><td><code>MODULO</code> / <code>MOD a b</code></td><td>Reste de la division de <code>a</code> par <code>b</code>.</td><td><code>MODULO 10 3</code> (→ 1)</td></tr>
+                            <tr><td><code>RVB</code> / <code>RGB r v b</code></td><td>Crée une couleur à partir des composantes Rouge, Vert, Bleu.</td><td><code>FCC RVB 255 128 0</code></td></tr>
+                            <tr><td><code>PI</code></td><td>Constante mathématique Pi (≈ 3.14159).</td><td><code>LOG PI</code></td></tr>
+                        </tbody>
+                    </table>
 
-                    <h3>TANTQUE condition [ ... ]</h3>
-                    <div class="example"><span class="keyword">TANTQUE</span> (:x < 100) [ <span class="variable">:x</span>++ ]</div>
-
-                    <h3>CHOISIS val [ CASE v1 [ ... ] AUTRES [ ... ] ]</h3>
-                    <div class="example"><span class="keyword">CHOISIS</span> (:c) [
-  <span class="keyword">CASE</span> "rouge" [ <span class="command">FCC</span> "red" ]
-  <span class="keyword">AUTRES</span> [ <span class="command">FCC</span> "black" ]
-]</div>
+                    <h3>Opérateurs</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Catégorie</th><th>Opérateurs</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Arithmétiques</strong></td><td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>^</code></td><td><code>10 * 5</code></td></tr>
+                            <tr><td><strong>Comparaison</strong></td><td><code>==</code>, <code>!=</code>, <code>></code>, <code><</code>, <code>>=</code>, <code><=</code></td><td><code>:x > 10</code></td></tr>
+                            <tr><td><strong>Logiques</strong></td><td><code>||</code> (OU), <code>&&</code> (ET), <code>!</code> (NON)</td><td><code>(:a > 0) && (:a < 10)</code></td></tr>
+                            <tr><td><strong>Affectation</strong></td><td><code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>++</code>, <code>--</code></td><td><code>:x += 1</code></td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
             <section id="variables">
-                <h2><span class="icon" aria-hidden="true">x</span> Variables & Procédures</h2>
+                <h2><span class="icon">📦</span> Variables et Tableaux</h2>
                 <div class="card">
-                    <h3>Variables</h3>
-                    <p>Déclaration avec <code>DONNE</code> ou affectation directe.</p>
-                    <div class="example"><span class="keyword">DONNE</span> <span class="variable">:x</span> 10
-<span class="variable">:y</span> = 20
-<span class="variable">:x</span> += 5</div>
+                    <h3>Déclaration et Attribution</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Mots-clés</th><th>Description</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>DONNE</code> / <code>DECLARE</code> / <code>LET</code></td><td>Définit ou modifie une variable globale ou locale.</td><td><code>DONNE :x 10</code></td></tr>
+                            <tr><td><code>:nom</code></td><td>Syntaxe pour accéder à la valeur d'une variable.</td><td><code>AV :x</code></td></tr>
+                        </tbody>
+                    </table>
 
-                    <h3>Procédures</h3>
-                    <div class="example"><span class="keyword">POUR</span> TRIANGLE <span class="variable">:t</span>
-  <span class="keyword">REPETE</span> 3 [ <span class="command">AV</span> <span class="variable">:t</span> <span class="command">TD</span> 120 ]
-<span class="keyword">FIN</span>
+                    <h3>Tableaux</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Commande (FR / EN)</th><th>Description</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>TABLEAU</code></td><td>Crée un nouveau tableau vide.</td><td><code>DONNE :t TABLEAU</code></td></tr>
+                            <tr><td><code>TAB_AJOUTE</code> / <code>AJOUTE tab val</code></td><td>Ajoute une valeur à la fin du tableau.</td><td><code>TAB_AJOUTE :t "Logo"</code></td></tr>
+                            <tr><td><code>TAB_MODIFIE</code> / <code>MODIFIE tab i val</code></td><td>Modifie l'élément à l'index <code>i</code> (commence à 0).</td><td><code>TAB_MODIFIE :t 0 "Nouveau"</code></td></tr>
+                            <tr><td><code>TAB_LIS</code> / <code>LIS tab i</code></td><td>Récupère l'élément à l'index <code>i</code>.</td><td><code>LOG TAB_LIS :t 0</code></td></tr>
+                            <tr><td><code>TAB_SUPPRIME</code> / <code>SUPPRIME tab i</code></td><td>Supprime l'élément à l'index <code>i</code>.</td><td><code>TAB_SUPPRIME :t 0</code></td></tr>
+                            <tr><td><code>TAB_TAILLE</code> / <code>TAILLE tab</code></td><td>Retourne le nombre d'éléments dans le tableau.</td><td><code>LOG TAB_TAILLE :t</code></td></tr>
+                            <tr><td><code>TAB_VIDE</code> / <code>VIDE tab</code></td><td>Supprime tous les éléments du tableau.</td><td><code>TAB_VIDE :t</code></td></tr>
+                            <tr><td><code>TAB_TEXTE</code> / <code>TEXTE tab</code></td><td>Convertit le tableau en une chaîne de texte séparée par des virgules.</td><td><code>ECRIS TAB_TEXTE :t</code></td></tr>
+                        </tbody>
+                    </table>
 
-TRIANGLE 100</div>
-
-                    <h3>Récursivité</h3>
-                    <div class="example"><span class="keyword">POUR</span> ARBRE <span class="variable">:t</span>
-  <span class="keyword">SI</span> :t < 5 [ <span class="keyword">STOP</span> ]
-  <span class="command">AV</span> :t
-  <span class="command">TG</span> 30 ARBRE :t * 0.7
-  <span class="command">TD</span> 60 ARBRE :t * 0.7
-  <span class="command">TG</span> 30 <span class="command">RE</span> :t
-<span class="keyword">FIN</span></div>
+                    <h3>Conversions de types</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Fonction</th><th>Description</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>_NOMBRE val</code></td><td>Convertit une chaîne ou valeur en nombre.</td><td><code>_NOMBRE "42"</code></td></tr>
+                            <tr><td><code>_TEXTE val</code></td><td>Convertit une valeur en chaîne de caractères.</td><td><code>_TEXTE 100</code></td></tr>
+                            <tr><td><code>_TABLEAU texte</code></td><td>Crée un tableau à partir d'un texte séparé par des virgules (détecte les nombres).</td><td><code>_TABLEAU "1,2,3"</code></td></tr>
+                            <tr><td><code>_S_TABLEAU texte</code></td><td>Crée un tableau de chaînes à partir d'un texte séparé par des virgules.</td><td><code>_S_TABLEAU "a,b,c"</code></td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
-            <section id="avance">
-                <h2><span class="icon" aria-hidden="true">⚙</span> Avancé</h2>
+            <section id="controle">
+                <h2><span class="icon">🔄</span> Structures de Contrôle</h2>
                 <div class="card">
-                    <h3>Classes</h3>
-                    <div class="example"><span class="keyword">CLASSE</span> Point [
-  constructeur [ <span class="variable">this.x</span> = 0 ]
-  setX [ <span class="keyword">DONNE</span> <span class="variable">this.x</span> 10 ]
-]</div>
-                    <h3>Opérateurs</h3>
-                    <p>Supports des opérateurs : <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>^</code>, <code>++</code>, <code>--</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>==</code>, <code>!=</code>, <code>></code>, <code><</code>, <code>>=</code>, <code><=</code>.</p>
+                    <table>
+                        <thead>
+                            <tr><th>Structure</th><th>Syntaxe</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Boucle Répéter</strong></td><td><code>REPETE n [ ... ]</code></td><td><code>REPETE 4 [ AV 100 TD 90 ]</code></td></tr>
+                            <tr><td><strong>Conditionnelle</strong></td><td><code>SI (condition) [ ... ] SINON [ ... ]</code></td><td><code>SI (:x > 10) [ AV 10 ] SINON [ RE 10 ]</code></td></tr>
+                            <tr><td><strong>Boucle Tant Que</strong></td><td><code>TANTQUE (condition) [ ... ]</code></td><td><code>TANTQUE (:i < 10) [ :i++ ]</code></td></tr>
+                            <tr><td><strong>Sélecteur (Switch)</strong></td><td><code>CHOISIS (valeur) [ CASE v1 [ ] CASE v2 [ ] AUTRES [ ] ]</code></td><td><code>CHOISIS (:c) [ CASE 1 [ AV 10 ] AUTRES [ RE 10 ] ]</code></td></tr>
+                            <tr><td><strong>Contrôle de boucle</strong></td><td><code>STOP</code> (quitter), <code>CONTINUE</code> (sauter)</td><td><code>SI (:err) [ STOP ]</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="proced">
+                <h2><span class="icon">🏗️</span> Procédures et Classes</h2>
+                <div class="card">
+                    <h3>Procédures (Fonctions)</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Élément</th><th>Syntaxe / Rôle</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Définition</strong></td><td><code>POUR NOM :arg1 :arg2 ... FIN</code></td><td><code>POUR CARRE :t REPETE 4 [ AV :t TD 90 ] FIN</code></td></tr>
+                            <tr><td><strong>Valeur de retour</strong></td><td><code>RENDS valeur</code> (Retourne une valeur et quitte).</td><td><code>RENDS :x * :x</code></td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Classes (POO)</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Élément</th><th>Syntaxe / Rôle</th><th>Exemple</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Déclaration</strong></td><td><code>CLASSE Nom [ ... ]</code></td><td><code>CLASSE Robot [ ... ]</code></td></tr>
+                            <tr><td><strong>Constructeur</strong></td><td><code>constructeur [ ... ]</code></td><td><code>constructeur [ DONNE this.nom "R2" ]</code></td></tr>
+                            <tr><td><strong>Méthodes</strong></td><td><code>nomMethode [ ... ]</code></td><td><code>avancer [ AV 50 ]</code></td></tr>
+                            <tr><td><strong>Instanciation</strong></td><td><code>NEW Nom()</code></td><td><code>DONNE :r NEW Robot()</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="exemples_pratiques">
+                <h2><span class="icon">🌟</span> Exemples Pratiques</h2>
+                
+                <div class="card">
+                    <h3>1. La Fleur Géométrique</h3>
+                    <p>Cet exemple utilise des boucles imbriquées pour créer une forme complexe à partir de simples cercles.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Fleur</div>
+                        <pre class="example"><span class="command">VE</span> <span class="comment">// Efface l'écran</span>
+<span class="command">FTC</span> 2 <span class="comment">// Épaisseur du trait</span>
+<span class="command">FCC</span> "violet" <span class="comment">// Couleur du trait</span>
+<span class="keyword">REPETE</span> 12 [
+  <span class="command">CERCLE</span> 60 <span class="comment">// Dessine un cercle de rayon 60</span>
+  <span class="command">TD</span> 30 <span class="comment">// Tourne de 30 degrés pour le prochain pétale</span>
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>2. Carré Rempli Dynamique</h3>
+                    <p>Apprenez à utiliser les couleurs de remplissage et la commande REMPLIS pour colorer vos formes.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Carré Coloré</div>
+                        <pre class="example"><span class="command">VE</span>
+<span class="command">FCC</span> "noir"
+<span class="command">FCB</span> "orange" <span class="comment">// Définit la couleur de remplissage</span>
+<span class="keyword">REPETE</span> 4 [
+  <span class="command">AV</span> 100
+  <span class="command">TD</span> 90
+]
+<span class="command">REMPLIS</span> <span class="comment">// Remplit la zone fermée tracée</span></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>3. Spirale Mathématique</h3>
+                    <p>Une spirale créée en augmentant progressivement la distance parcourue à chaque étape grâce à une variable.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Spirale</div>
+                        <pre class="example"><span class="command">VE</span>
+<span class="keyword">DONNE</span> <span class="variable">:cote</span> 10 <span class="comment">// Initialise la longueur du côté</span>
+<span class="keyword">REPETE</span> 50 [
+  <span class="command">AV</span> <span class="variable">:cote</span>
+  <span class="command">TD</span> 91 <span class="comment">// Un angle légèrement supérieur à 90 crée la spirale</span>
+  <span class="keyword">DONNE</span> <span class="variable">:cote</span> <span class="variable">:cote</span> + 5 <span class="comment">// Augmente la longueur à chaque tour</span>
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>4. Arbre Récursif (Fractale)</h3>
+                    <p>La récursivité permet de créer des structures fractales comme des arbres de manière très concise.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Arbre Fractal</div>
+                        <pre class="example"><span class="keyword">POUR</span> ARBRE <span class="variable">:t</span>
+  <span class="keyword">SI</span> :t < 5 [ <span class="keyword">STOP</span> ] <span class="comment">// Condition d'arrêt</span>
+  <span class="command">AV</span> <span class="variable">:t</span> <span class="comment">// Trace le tronc</span>
+  <span class="command">TG</span> 30 ARBRE :t * 0.7 <span class="comment">// Branche gauche</span>
+  <span class="command">TD</span> 60 ARBRE :t * 0.7 <span class="comment">// Branche droite</span>
+  <span class="command">TG</span> 30 <span class="command">RE</span> <span class="variable">:t</span> <span class="comment">// Revient à la base</span>
+<span class="keyword">FIN</span>
+
+<span class="command">VE</span> <span class="command">LC</span> <span class="command">FPOS</span> 0 -200 <span class="command">BC</span>
+ARBRE 100 <span class="comment">// Lance la génération</span></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>5. Gestion des Tableaux de Données</h3>
+                    <p>Exemple complet de manipulation de listes : ajout, modification et affichage de données.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Gestion de Liste</div>
+                        <pre class="example"><span class="keyword">DONNE</span> <span class="variable">:notes</span> <span class="command">TABLEAU</span> <span class="comment">// Crée un tableau vide</span>
+<span class="command">TAB_AJOUTE</span> <span class="variable">:notes</span> 15
+<span class="command">TAB_AJOUTE</span> <span class="variable">:notes</span> 18
+<span class="command">TAB_AJOUTE</span> <span class="variable">:notes</span> 12
+
+<span class="comment">// Modifie la première note</span>
+<span class="command">TAB_MODIFIE</span> <span class="variable">:notes</span> 0 20
+
+<span class="command">LOG</span> "Liste des notes : " + <span class="command">TAB_TEXTE</span> <span class="variable">:notes</span>
+<span class="command">LOG</span> "Nombre de notes : " + <span class="command">TAB_TAILLE</span> <span class="variable">:notes</span></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>6. Polygone avec couleurs dynamiques</h3>
+                    <p>Cet exemple montre comment changer la couleur du trait dynamiquement en utilisant l'index de boucle <code>_i0</code>.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Polygone Arc-en-ciel</div>
+                        <pre class="example"><span class="command">VE</span> <span class="command">FTC</span> 5
+<span class="keyword">REPETE</span> 36 [
+  <span class="command">FCC</span> <span class="command">RVB</span> (_i0 * 7) 100 200 <span class="comment">// La couleur change à chaque pas</span>
+  <span class="command">AV</span> 20
+  <span class="command">TD</span> 10
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>7. Dessin de texte circulaire</h3>
+                    <p>On peut combiner les mouvements de la tortue et l'écriture pour placer du texte de manière artistique.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Texte en Cercle</div>
+                        <pre class="example"><span class="command">VE</span> <span class="command">POLICE_TAILLE</span> 20
+<span class="keyword">REPETE</span> 12 [
+  <span class="command">LC</span> <span class="command">AV</span> 100 <span class="command">BC</span>
+  <span class="command">ECRIS</span> "LOGO"
+  <span class="command">LC</span> <span class="command">RE</span> 100 <span class="command">BC</span>
+  <span class="command">TD</span> 30
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>8. Utilisation d'une Classe Robot</h3>
+                    <p>La programmation orientée objet permet de créer des structures réutilisables avec leurs propres propriétés et comportements.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Robot POO</div>
+                        <pre class="example"><span class="keyword">CLASSE</span> Robot [
+  constructeur [
+    <span class="keyword">DONNE</span> <span class="variable">this.c</span> "bleu"
+  ]
+  
+  dessiner [
+    <span class="command">FCC</span> <span class="variable">this.c</span>
+    <span class="keyword">REPETE</span> 4 [ <span class="command">AV</span> 50 <span class="command">TD</span> 90 ]
+  ]
+]
+
+<span class="keyword">DONNE</span> <span class="variable">:monRobot</span> <span class="keyword">NEW</span> Robot()
+<span class="variable">:monRobot</span>.dessiner()</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>9. Calculatrice Interactive</h3>
+                    <p>Utilisez LIS pour demander des nombres à l'utilisateur et effectuez des calculs mathématiques.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Somme de deux nombres</div>
+                        <pre class="example"><span class="keyword">DONNE</span> <span class="variable">:a</span> <span class="command">_NOMBRE</span> <span class="command">LIS</span> "Premier nombre ?"
+<span class="keyword">DONNE</span> <span class="variable">:b</span> <span class="command">_NOMBRE</span> <span class="command">LIS</span> "Deuxième nombre ?"
+<span class="keyword">DONNE</span> <span class="variable">:somme</span> <span class="variable">:a</span> + <span class="variable">:b</span>
+<span class="command">MSG</span> "Le résultat est : " + <span class="variable">:somme</span></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>10. Grille de pixels (Art pixelisé)</h3>
+                    <p>La commande PIXEL permet de dessiner point par point, idéal pour des motifs de bas niveau ou des algorithmes de rendu.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Damier de pixels</div>
+                        <pre class="example"><span class="command">VE</span>
+<span class="keyword">REPETE</span> 20 [
+  <span class="keyword">DONNE</span> <span class="variable">:x</span> _i0 * 5
+  <span class="keyword">REPETE</span> 20 [
+    <span class="keyword">DONNE</span> <span class="variable">:y</span> _i1 * 5
+    <span class="keyword">SI</span> ((_i0 + _i1) % 2 == 0) [
+      <span class="command">PIXEL</span> <span class="variable">:x</span> <span class="variable">:y</span> "noir"
+    ]
+  ]
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>11. Couronne de Polygones</h3>
+                    <p>En imbriquant des boucles, on peut créer des motifs répétitifs complexes. Ici, une série d'hexagones disposés en couronne.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Couronne Hexagonale</div>
+                        <pre class="example"><span class="command">VE</span>
+<span class="keyword">REPETE</span> 12 [
+  <span class="keyword">REPETE</span> 6 [ <span class="command">AV</span> 40 <span class="command">TD</span> 60 ] <span class="comment">// Dessine un hexagone</span>
+  <span class="command">LC</span> <span class="command">AV</span> 60 <span class="command">BC</span> <span class="comment">// Déplace sans tracer</span>
+  <span class="command">TD</span> 30 <span class="comment">// Pivote pour l'hexagone suivant</span>
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>12. Analyse de Texte et Tableaux</h3>
+                    <p>Utilisez les fonctions de conversion pour transformer une chaîne de texte en données manipulables.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Traitement CSV</div>
+                        <pre class="example"><span class="keyword">DONNE</span> <span class="variable">:phrase</span> "Code,Art,Maths"
+<span class="keyword">DONNE</span> <span class="variable">:mots</span> <span class="command">_S_TABLEAU</span> <span class="variable">:phrase</span>
+
+<span class="keyword">REPETE</span> <span class="command">TAB_TAILLE</span> <span class="variable">:mots</span> [
+  <span class="command">LOG</span> "Élément " + _i0 + " : " + <span class="command">TAB_LIS</span> <span class="variable">:mots</span> _i0
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>13. Étoiles Aléatoires</h3>
+                    <p>Utilisez HASARD et RVB pour générer un ciel étoilé coloré de manière imprévisible.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Ciel Étoilé</div>
+                        <pre class="example"><span class="command">VE</span> <span class="command">FCA</span> "noir"
+<span class="keyword">REPETE</span> 15 [
+  <span class="command">FCC</span> <span class="command">RVB</span> (<span class="command">HASARD</span> 255) (<span class="command">HASARD</span> 255) 255
+  <span class="command">LC</span> <span class="command">FPOS</span> (<span class="command">HASARD</span> 400 - 200) (<span class="command">HASARD</span> 400 - 200) <span class="command">BC</span>
+  <span class="command">ETOILE</span> 5 (<span class="command">HASARD</span> 30) (<span class="command">HASARD</span> 10)
+]</pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>14. Animation de l'orientation</h3>
+                    <p>Ce script montre comment la tortue peut s'orienter vers des points spécifiques du canevas.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Orientation vers (0,0)</div>
+                        <pre class="example"><span class="command">VE</span>
+<span class="command">LC</span> <span class="command">FPOS</span> 150 150 <span class="command">BC</span>
+<span class="command">FCAP</span> <span class="command">VERS</span> 0 0 <span class="comment">// Oriente vers le centre</span>
+<span class="command">AV</span> <span class="command">DISTANCE</span> 0 0 <span class="comment">// Avance jusqu'au centre</span></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>15. Visualisation Mathématique (SIN)</h3>
+                    <p>Visualisation d'une onde sinusoïdale en déplaçant la tortue sur l'axe X tout en calculant son axe Y.</p>
+                    <div class="example-block">
+                        <div class="example-header">Code : Onde Sinus</div>
+                        <pre class="example"><span class="command">VE</span> <span class="command">LC</span> <span class="command">FPOS</span> -200 0 <span class="command">BC</span>
+<span class="keyword">REPETE</span> 40 [
+  <span class="keyword">DONNE</span> <span class="variable">:y</span> (<span class="command">SIN</span> (_i0 * 18)) * 50
+  <span class="command">FPOS</span> (-200 + (_i0 * 10)) <span class="variable">:y</span>
+]</pre>
+                    </div>
                 </div>
             </section>
         </div>
     </div>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        }, { passive: true });
+    </script>
 </body>
 </html>
