@@ -122,7 +122,21 @@ document.addEventListener('DOMContentLoaded', () => {
 "   SI(:i%360==0)[:j+=0.01]\n"+
 "   :i++\n"+
 "]"
-		}		
+		}
+,
+{
+title: "Palette des couleurs",
+file:"examples/Palette.logo",
+code:"VE \n"+
+"CT \n"+
+"REPETE 255[\n"+
+"  DONNE :x _i1 \n"+
+"  REPETE 255[ \n"+
+"    DONNE :y _i0 \n"+
+"    PIXEL :x-125, :y-125 RVB _i0 _i1 ABS(_i0-_i1)\n"+  
+"    ]\n"+
+"]"
+}		
     ];
 	
 	/*

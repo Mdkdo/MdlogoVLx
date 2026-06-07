@@ -1,0 +1,9 @@
+VE
+CT 
+REPETE 255[
+  DONNE :x _i1 
+  REPETE 255[
+    DONNE :y _i0 
+    PIXEL :x-125, :y-125 RVB _i0 _i1 ABS(_i0-_i1)  
+    ]
+ ]
