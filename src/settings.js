@@ -14,9 +14,13 @@
         function loadSettings() {
             try {
                 const saved = localStorage.getItem('logoJsSettings');
-                if (!saved) return;
+                if (!saved) {
+                    themeSelect.value = 'theme-midnight';
+                    document.body.className = themeSelect.value;
+                    return;
+                }
                 const settings = JSON.parse(saved);
-                themeSelect.value = settings.theme || 'theme-light';
+                themeSelect.value = settings.theme || 'theme-midnight';
                 document.body.className = themeSelect.value;
                 bgColorPicker.value = settings.bgColor || '#ffffff';
                 canvas.style.backgroundColor = bgColorPicker.value;

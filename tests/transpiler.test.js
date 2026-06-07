@@ -111,6 +111,31 @@ test("transpile les variables et affectations directes", () => {
     assert.match(js, /ECRIS\(x\);/);
 });
 
+test("transpile CLASSE avec acces objet fleche et allocation directe", () => {
+    const js = compact(logo.translateLogoToJS(`
+CLASSE Robot [
+  constructeur [
+    DONNE ->c "bleu"
+  ]
+
+  dessiner [
+    FCC ->.c
+    REPETE 4 [ AV 50 TD 90 ]
+  ]
+]
+
+DONNE :monRobot Robot()
+:monRobot.dessiner()
+`));
+
+    assert.match(js, /class Robot/);
+    assert.match(js, /constructor\(\) \{ var this\.c = "bleu";|constructor\(\) \{ this\.c = "bleu";/);
+    assert.match(js, /dessiner\(\) \{/);
+    assert.match(js, /FCC\(this\.c\);/);
+    assert.match(js, /var monRobot = new Robot\(\);/);
+    assert.match(js, /monRobot\.dessiner\(\);/);
+});
+
 test("transpile les fonctions de tableau avec prefixe TAB", () => {
     const js = compact(logo.translateLogoToJS("DONNE :t TABLEAU TAB_AJOUTE :t \"A\" TAB_MODIFIE :t 0 \"B\" ECRIS TAB_LIS :t 0 LOG TAB_TAILLE :t"));
 
@@ -205,6 +230,30 @@ test("execute PAUSE sans erreur", async () => {
     await logo.executeSnippet("PAUSE 1");
 
     assert.strictEqual(warningCount, 0);
+    assert.strictEqual(logo.logoExecutionState.isRunning, false);
+});
+
+test("execute une classe Logo avec allocation directe et acces fleche", async () => {
+    let lastLog = "";
+    logo.logToTerminal = (message, type) => {
+        if (type === "log") lastLog = message;
+    };
+    await logo.executeSnippet(`
+CLASSE Robot [
+  constructeur [
+    DONNE ->c "bleu"
+  ]
+
+  lireCouleur [
+    LOG ->.c
+  ]
+]
+
+DONNE :monRobot Robot()
+:monRobot.lireCouleur()
+`);
+
+    assert.strictEqual(lastLog, "bleu");
     assert.strictEqual(logo.logoExecutionState.isRunning, false);
 });
 

@@ -398,7 +398,7 @@
                             <tr><td><code>REMPLIS</code> / <code>FILL</code></td><td>Remplit la dernière forme fermée tracée.</td><td><code>REMPLIS</code></td></tr>
                             <tr><td><code>TAMPON</code> / <code>STAMP</code></td><td>Dessine l'image actuelle de la tortue sur le canevas.</td><td><code>TAMPON</code></td></tr>
                             <tr><td><code>OPACITE</code> / <code>OPACITY n</code></td><td>Définit la transparence globale (0 à 1).</td><td><code>OPACITE 0.5</code></td></tr>
-                            <tr><td><code>FLUIDE</code> / <code>SMOOTH n</code></td><td>Active (1) ou désactive (0) l'animation fluide.</td><td><code>FLUIDE 1</code></td></tr>
+                            <tr><td><code>FLUIDE</code> / <code>SMOOTH</code></td><td>Active l'animation fluide.</td><td><code>FLUIDE</code></td></tr>
                             <tr><td><code>DEGRADE</code> / <code>GRADIENT type c1 c2 ...</code></td><td>Crée un dégradé (linear/radial).</td><td><code>DEGRADE "linear" "rouge" "bleu"</code></td></tr>
                         </tbody>
                     </table>
@@ -570,9 +570,9 @@
                         </thead>
                         <tbody>
                             <tr><td><strong>Déclaration</strong></td><td><code>CLASSE Nom [ ... ]</code></td><td><code>CLASSE Robot [ ... ]</code></td></tr>
-                            <tr><td><strong>Constructeur</strong></td><td><code>constructeur [ ... ]</code></td><td><code>constructeur [ DONNE this.nom "R2" ]</code></td></tr>
+                            <tr><td><strong>Constructeur</strong></td><td><code>constructeur [ ... ]</code></td><td><code>constructeur [ DONNE ->nom "R2" ]</code></td></tr>
                             <tr><td><strong>Méthodes</strong></td><td><code>nomMethode [ ... ]</code></td><td><code>avancer [ AV 50 ]</code></td></tr>
-                            <tr><td><strong>Instanciation</strong></td><td><code>NEW Nom()</code></td><td><code>DONNE :r NEW Robot()</code></td></tr>
+                            <tr><td><strong>Instanciation</strong></td><td><code>Nom()</code></td><td><code>DONNE :r Robot()</code></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -633,14 +633,14 @@
                     <div class="example-block">
                         <div class="example-header">Code : Arbre Fractal</div>
                         <pre class="example"><span class="keyword">POUR</span> ARBRE <span class="variable">:t</span>
-  <span class="keyword">SI</span> :t < 5 [ <span class="keyword">STOP</span> ] <span class="comment">// Condition d'arrêt</span>
+  <span class="keyword">SI</span> :t < 5 [ <span class="keyword">RENDS</span> ] <span class="comment">// Condition d'arrêt</span>
   <span class="command">AV</span> <span class="variable">:t</span> <span class="comment">// Trace le tronc</span>
   <span class="command">TG</span> 30 ARBRE :t * 0.7 <span class="comment">// Branche gauche</span>
   <span class="command">TD</span> 60 ARBRE :t * 0.7 <span class="comment">// Branche droite</span>
   <span class="command">TG</span> 30 <span class="command">RE</span> <span class="variable">:t</span> <span class="comment">// Revient à la base</span>
 <span class="keyword">FIN</span>
 
-<span class="command">VE</span> <span class="command">LC</span> <span class="command">FPOS</span> 0 -200 <span class="command">BC</span>
+<span class="command">VE</span> <span class="command">LC</span> <span class="command">FPOS</span> 0 , -200 <span class="command">BC</span>
 ARBRE 100 <span class="comment">// Lance la génération</span></pre>
                     </div>
                 </div>
@@ -699,16 +699,16 @@ ARBRE 100 <span class="comment">// Lance la génération</span></pre>
                         <div class="example-header">Code : Robot POO</div>
                         <pre class="example"><span class="keyword">CLASSE</span> Robot [
   constructeur [
-    <span class="keyword">DONNE</span> <span class="variable">this.c</span> "bleu"
+    <span class="keyword">DONNE</span> <span class="variable">->c</span> "bleu"
   ]
   
   dessiner [
-    <span class="command">FCC</span> <span class="variable">this.c</span>
+    <span class="command">FCC</span> <span class="variable">->c</span>
     <span class="keyword">REPETE</span> 4 [ <span class="command">AV</span> 50 <span class="command">TD</span> 90 ]
   ]
 ]
 
-<span class="keyword">DONNE</span> <span class="variable">:monRobot</span> <span class="keyword">NEW</span> Robot()
+<span class="keyword">DONNE</span> <span class="variable">:monRobot</span> <span class="keyword"></span> Robot()
 <span class="variable">:monRobot</span>.dessiner()</pre>
                     </div>
                 </div>
@@ -732,9 +732,9 @@ ARBRE 100 <span class="comment">// Lance la génération</span></pre>
                         <div class="example-header">Code : Damier de pixels</div>
                         <pre class="example"><span class="command">VE</span>
 <span class="keyword">REPETE</span> 20 [
-  <span class="keyword">DONNE</span> <span class="variable">:x</span> _i0 * 5
+  <span class="keyword">DONNE</span> <span class="variable">:x</span> _i1 * 5
   <span class="keyword">REPETE</span> 20 [
-    <span class="keyword">DONNE</span> <span class="variable">:y</span> _i1 * 5
+    <span class="keyword">DONNE</span> <span class="variable">:y</span> _i0 * 5
     <span class="keyword">SI</span> ((_i0 + _i1) % 2 == 0) [
       <span class="command">PIXEL</span> <span class="variable">:x</span> <span class="variable">:y</span> "noir"
     ]

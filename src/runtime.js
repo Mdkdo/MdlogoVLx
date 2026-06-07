@@ -3,7 +3,7 @@
         isRunning: false,
         stopRequested: false,
         loopIterations: 0,
-        maxLoopIterations: 100000
+        maxLoopIterations: 1000000
     };
 
     global.resetLogoExecutionState = function() {
@@ -37,6 +37,10 @@
 
     global.runCode = function() {
         global.clearTerminal();
+        const terminalSection = document.getElementById('terminal-section');
+        const showTerminalBtn = document.getElementById('showTerminalBtn');
+        if (terminalSection) terminalSection.classList.add('hidden');
+        if (showTerminalBtn) showTerminalBtn.classList.remove('hidden');
         const code = document.getElementById('codeEditor').value;
         if (global.turtle) global.turtle.reset();
         global.executeSnippet(code);

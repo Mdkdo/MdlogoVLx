@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo VL Advanced</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+    <div id="app" class="mode-editor">
+        <!-- Editor View -->
+        <div id="editor-view" class="view">
+            <header class="main-header">
+                <h1>Logo VL Advanced</h1>
+                <div class="header-actions">
+                    <select id="themeSelect">
+                        <option value="theme-light">Clair</option>
+                        <option value="theme-dark">Sombre</option>
+                        <option value="theme-monokai">Monokai</option>
+                        <option value="theme-solarized">Solarized</option>
+                        <option value="theme-midnight">Midnight</option>
+                    </select>
+                    <button id="runBtnTop" class="primary"><span class="icon" aria-hidden="true">▶</span> Exécuter</button>
+                    <button id="settingsBtn" title="Paramètres"><span class="icon" aria-hidden="true">⚙</span></button>
+                    <a href="help.html" target="_blank" class="help-link"><span class="icon" aria-hidden="true">?</span> Aide</a>
+                </div>
+            </header>
+
+            <div id="settings-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Paramètres</h2>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="setting-item">
+                            <label for="bg-color-picker">Couleur du Canevas :</label>
+                            <input type="color" id="bg-color-picker" value="#ffffff">
+                        </div>
+                        <div class="setting-item">
+                            <label for="turtle-img-select">Image de la Tortue :</label>
+                            <select id="turtle-img-select">
+                                <option value="default">Classique (Triangle)</option>
+                                <option value="turtle">Tortue dessinée</option>
+                                <option value="spaceship">Vaisseau spatial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="editor-workspace">
+                <div class="toolbar-container">
+                    <div class="toolbar">
+<button id="newFileBtn" title="Nouveau"><span class="icon">📄+</span></button>
+<button id="openFileBtn" title="Ouvrir"><span class="icon">📂</span></button>
+<button id="saveFileBtn" title="Enregistrer"><span class="icon">💾</span></button>
+<span class="separator"></span>
+<button id="undoBtn" title="Annuler"><span class="icon">↩️</span></button>
+<button id="redoBtn" title="Rétablir"><span class="icon">↪️</span></button>
+<span class="separator"></span>
+<button id="selectAllBtn" title="Tout sélectionner"><span class="icon">☑️</span></button>
+<button id="copyBtn" title="Copier"><span class="icon">📋</span></button>
+<button id="cutBtn" title="Couper"><span class="icon">✂️</span></button>
+<button id="pasteBtn" title="Coller"><span class="icon">📌</span></button>
+<span class="separator"></span>
+<button id="commentBtn" title="Commenter"><span class="icon">💬</span></button>
+<button id="indentBtn" title="Indenter"><span class="icon">⇥</span></button>
+<button id="unindentBtn" title="Désindenter"><span class="icon">⇤</span></button>
+                    </div>
+                </div>
+                
+                <div class="examples-bar">
+                    <label for="exampleSelect">Exemples</label>
+                    <select id="exampleSelect">
+                        <option value="">Choisir un exemple...</option>
+                    </select>
+                    <button id="loadExampleBtn" title="Charger l'exemple"><span class="icon" aria-hidden="true">▣</span> Charger</button>
+                </div>
+
+                <div id="editor-container">
+                    <div id="line-numbers"></div>
+                    <textarea id="codeEditor" spellcheck="false">REPETE 36 [
+  REPETE 4 [
+    AV 100
+    TD 90
+  ]
+  TD 10
+]</textarea>
+                    <pre id="highlighting" aria-hidden="true"><code id="highlighting-content"></code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Execution View -->
+        <div id="execution-view" class="view">
+            <div class="exec-toolbar">
+                <div class="toolbar-row">
+                    <button id="backToEditorBtn" class="exec-btn"><span class="icon" aria-hidden="true">✎</span> Editeur</button>
+                    <button id="stopBtn" class="exec-btn danger"><span class="icon" aria-hidden="true">■</span> Arrêter</button>
+                    
+                    <div class="status-bar">
+                        <div class="status-item" title="Position de la Souris">
+                            <span class="icon" aria-hidden="true">⌖</span> <span id="mouse-pos">0, 0</span>
+                        </div>
+                        <div class="status-item" title="Position de la Tortue">
+                            <span class="icon" aria-hidden="true">⌾</span> <span id="turtle-pos">0, 0</span>
+                        </div>
+                        <div class="status-item" title="Angle de la Tortue">
+                            <span class="icon" aria-hidden="true">↥</span> <span id="turtle-angle">0°</span>
+                        </div>
+                        <div class="status-item" title="Épaisseur du trait">
+                            <span class="icon" aria-hidden="true">✎</span> <span id="pen-size">1</span>
+                        </div>
+                        <div class="status-item" title="Couleur du trait">
+                            <span class="color-preview" id="pen-color-preview"></span> <span id="pen-color">#000000</span>
+                        </div>
+                        <div class="status-item" title="Couleur de remplissage">
+                            <span class="color-preview" id="fill-color-preview"></span> <span id="fill-color-status">#000000</span>
+                        </div>
+                        <div class="status-item" title="Couleur du fond">
+                            <span class="color-preview" id="bg-color-preview-status"></span> <span id="bg-color-status">#ffffff</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="toolbar-row">
+                    <div class="inline-cmd-container">
+                        <input type="text" id="inlineCmdInput" placeholder="Saisir une commande Logo...">
+                        <button id="runInlineBtn"><span class="icon" aria-hidden="true">▶</span></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="canvas-container">
+                <div id="canvas-stage" class="canvas-stage">
+                    <canvas id="turtleCanvas" width="800" height="600"></canvas>
+                    <canvas id="turtleLayer" width="800" height="600"></canvas>
+                </div>
+            </div>
+
+            <div id="terminal-section" class="terminal-popup hidden">
+                <div class="terminal-header">
+                    <span>Terminal</span>
+                    <div class="terminal-actions">
+                        <button id="clearTerminalBtn" title="Effacer"><span class="icon" aria-hidden="true">×</span></button>
+                        <button id="toggleTerminalBtn" title="Masquer"><span class="icon" aria-hidden="true">⌄</span></button>
+                    </div>
+                </div>
+                <div id="terminalOutput"></div>
+            </div>
+            
+            <button id="showTerminalBtn"><span class="icon" aria-hidden="true">&gt;_</span> Terminal</button>
+        </div>
+    </div>
+
+    
+    <script src="src/turtle.js"></script>
+    <script src="src/commands.js"></script>
+    <script src="src/transpiler.js"></script>
+    <script src="src/terminal.js"></script>
+    <script src="src/runtime.js"></script>
+    <script src="src/settings.js"></script>
+    <script src="src/editor-highlighting.js"></script>
+    <script src="src/editor-ui.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>

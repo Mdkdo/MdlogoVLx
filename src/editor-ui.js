@@ -173,12 +173,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const codeEditor = document.getElementById('codeEditor');
     const themeSelect = document.getElementById('themeSelect');
     const runBtnTop = document.getElementById('runBtnTop'); const backToEditorBtn = document.getElementById('backToEditorBtn');
-    const exampleSelect = document.getElementById('exampleSelect');
-    const loadExampleBtn = document.getElementById('loadExampleBtn');
+    const examplesBtn = document.getElementById('examplesBtn');
+    const examplesModal = document.getElementById('examples-modal');
+    const examplesList = document.getElementById('examples-list');
+    const closeExamplesModal = document.querySelector('.close-examples-modal');
     const settingsBtn = document.getElementById('settingsBtn'); const settingsModal = document.getElementById('settings-modal');
     const closeModal = document.querySelector('.close-modal'); settingsBtn.addEventListener('click', () => { settingsModal.classList.remove('hidden'); });
     closeModal.addEventListener('click', () => { settingsModal.classList.add('hidden'); });
-    window.addEventListener('click', (e) => { if (e.target === settingsModal) settingsModal.classList.add('hidden'); });
+    window.addEventListener('click', (e) => {
+        if (e.target === settingsModal) settingsModal.classList.add('hidden');
+        if (e.target === examplesModal) examplesModal.classList.add('hidden');
+    });
     const bgColorPicker = document.getElementById('bg-color-picker'); const turtleImgSelect = document.getElementById('turtle-img-select');
     const settings = window.createSettingsController({ canvas, themeSelect, bgColorPicker, turtleImgSelect });
     themeSelect.addEventListener('change', (e) => { document.body.className = e.target.value; settings.saveSettings(); });
@@ -191,14 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.updateHighlight();
     }
     settings.loadDraft(codeEditor);
-    bundledExamples.forEach((example, index) => {
-        const option = document.createElement('option');
-        option.value = String(index);
-        option.textContent = example.title;
-        exampleSelect.appendChild(option);
-    });
-    async function loadSelectedExample() {
-        const example = bundledExamples[Number(exampleSelect.value)];
+    async function loadExample(index) {
+        const example = bundledExamples[index];
         if (!example) return;
         try {
             const response = await fetch(example.file);
@@ -207,10 +206,29 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             setEditorCode(example.code);
         }
+        examplesModal.classList.add('hidden');
     }
-    loadExampleBtn.addEventListener('click', loadSelectedExample);
-    exampleSelect.addEventListener('change', loadSelectedExample);
-    runBtnTop.addEventListener('click', () => { app.className = 'mode-execution'; prepareCanvasForRun(); window.runCode(); });
+    bundledExamples.forEach((example, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'example-item';
+        button.innerHTML = `<span>${example.title}</span><small>${example.file}</small>`;
+        button.addEventListener('click', () => { loadExample(index); });
+        examplesList.appendChild(button);
+    });
+    examplesBtn.addEventListener('click', () => { examplesModal.classList.remove('hidden'); });
+    closeExamplesModal.addEventListener('click', () => { examplesModal.classList.add('hidden'); });
+    function waitForCanvasPaint() {
+        return new Promise(resolve => {
+            requestAnimationFrame(() => requestAnimationFrame(resolve));
+        });
+    }
+    runBtnTop.addEventListener('click', async () => {
+        app.className = 'mode-execution';
+        prepareCanvasForRun();
+        await waitForCanvasPaint();
+        window.runCode();
+    });
     backToEditorBtn.addEventListener('click', () => { app.className = 'mode-editor'; window.requestLogoStop(); });
     const newFileBtn = document.getElementById('newFileBtn'); const openFileBtn = document.getElementById('openFileBtn');
     const saveFileBtn = document.getElementById('saveFileBtn'); const undoBtn = document.getElementById('undoBtn');

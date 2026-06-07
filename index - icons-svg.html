@@ -6,19 +6,23 @@
     <title>Logo VL Advanced</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-midnight">
+<body class="theme-light">
     <div id="app" class="mode-editor">
         <!-- Editor View -->
         <div id="editor-view" class="view">
             <header class="main-header">
                 <h1>Logo VL Advanced</h1>
                 <div class="header-actions">
-                    <button id="runBtnTop" class="flat-action primary-action"><span class="icon" aria-hidden="true">▶</span> Exécuter</button>
-                    <button id="examplesBtn" class="flat-action"><span class="icon" aria-hidden="true">▣</span> Exemples</button>
-                    <button id="settingsBtn" class="flat-action" title="Paramètres"><span class="icon" aria-hidden="true">⚙</span> Paramètres</button>
-                    <a href="./help.html" class="flat-action help-button">
-                        <span class="icon" aria-hidden="true">?</span> Aide
-                    </a>
+                    <select id="themeSelect">
+                        <option value="theme-light">Clair</option>
+                        <option value="theme-dark">Sombre</option>
+                        <option value="theme-monokai">Monokai</option>
+                        <option value="theme-solarized">Solarized</option>
+                        <option value="theme-midnight">Midnight</option>
+                    </select>
+                    <button id="runBtnTop" class="primary"><span class="icon" aria-hidden="true">▶</span> Exécuter</button>
+                    <button id="settingsBtn" title="Paramètres"><span class="icon" aria-hidden="true">⚙</span></button>
+                    <a href="help.html" target="_blank" class="help-link"><span class="icon" aria-hidden="true">?</span> Aide</a>
                 </div>
             </header>
 
@@ -29,16 +33,6 @@
                         <button class="close-modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <div class="setting-item">
-                            <label for="themeSelect">Thème :</label>
-                            <select id="themeSelect">
-                                <option value="theme-light">Clair</option>
-                                <option value="theme-dark">Sombre</option>
-                                <option value="theme-monokai">Monokai</option>
-                                <option value="theme-solarized">Solarized</option>
-                                <option value="theme-midnight">Midnight</option>
-                            </select>
-                        </div>
                         <div class="setting-item">
                             <label for="bg-color-picker">Couleur du Canevas :</label>
                             <input type="color" id="bg-color-picker" value="#ffffff">
@@ -51,18 +45,6 @@
                                 <option value="spaceship">Vaisseau spatial</option>
                             </select>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="examples-modal" class="modal hidden">
-                <div class="modal-content examples-modal-content">
-                    <div class="modal-header">
-                        <h2>Exemples</h2>
-                        <button class="close-examples-modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="examples-list" class="examples-list"></div>
                     </div>
                 </div>
             </div>
@@ -199,6 +181,14 @@
         </span>
     </button>
 </div>
+                </div>
+                
+                <div class="examples-bar">
+                    <label for="exampleSelect">Exemples</label>
+                    <select id="exampleSelect">
+                        <option value="">Choisir un exemple...</option>
+                    </select>
+                    <button id="loadExampleBtn" title="Charger l'exemple"><span class="icon" aria-hidden="true">▣</span> Charger</button>
                 </div>
 
                 <div id="editor-container">

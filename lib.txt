@@ -1,0 +1,36 @@
+Tortue et mouvements: AV, RE, TD, TG, CT, MT,
+Crayon: LC, BC, FCC, FTC,PIXEL, VALPIXEL,
+Ecran: VE, NETTOIE, FCA, 
+Position: FCAP, FPOS, ORIGINE, POSX, POSY, CAP, DISTANCE, VERS, DS,
+Formes: LIGNE, RECT, ELIP, CERCLE, ARC, RECTANGLE, ELLIPSE, POLYGONE, ETOILE, FCB, REMPLIS, TAMPON, OPACITE, FLUIDE, DEGRADE, 
+Multimédia: JOUE, AFFICHEIMAGE, LIREVIDEO, AFFICHEVIDEO, STOPVIDEO, LIRESON, STOPSON,  
+Temps: PAUSE, 
+Texte: POLICE_TAILLE, POLICE_STYLE, POLICE_NOM, LOG, MSG, ECRIS, NL,RETOURLIGNE, LIS
+Maths: RACINE, PUISSANCE, VALABS, EXP, LOGN, ENTIER, ARRONDI, PLAFOND, MIN, MAX, SIN, COS, TAN,  ABS, ATAN, HASARD, MODULO, RVB,
+Variable et declaration: DONNE :x 10 , DONNE :s "abcd" , DONNE :t TABLEAU , 
+Tableau: TAB_AJOUTE, TAB_MODIFIE, TAB_LIS, TAB_SUPPRIME, TAB_TAILLE, TAB_VIDE, TAB_TEXTE
+Conversion: _NOMBRE, _TEXTE, _TABLEAU, _S_TABLEAU,
+Operateurs d'affectation : +=, -= , *= , /= , ++ , --
+Operateurs de comparaisons: ==, !=, >, <, >=, <=,
+Operateurs de arithmétiques: +, -, *, /, %, ^,
+Operateurs logique: || , && 
+Commentaire: //
+Structure de contrôle : SI (ondition)[...]SINON[...]  , TANTQUE(condition)[...] , REPETE nombre [] , CHOISIS(..)[ CASE ""[] AUTRES []] , STOP et CONTINUE pour contrôle les boucles ,
+
+Procédures: POUR NOM_DE_PROCEDURE :arg1 :arg2 ..
+            .........
+            FIN 
+            
+           RENDS pour rendre une valeur de la procédure ou arrêter la procédure
+Classe:    CLASSE Point [
+  constructeur [ this.x = 0 ]
+  setX [ DONNE this.x 10 ]
+]
+Constantes: 'rouge', 'vert', 'bleu', 'jaune', 'noir', 'blanc', 'rose', 'orange', 'violet', 'gris', 'marron', 'cyan', 'magenta', PI 
+
+
+        FD, BK, RT, LT, PU, PD, CS, CLEAN, HOME, HT, ST, STAMP,
+        SETCOLOR, FILLCOLOR, SETHEADING, SETXY, CANVASCOLOR, SETWIDTH, CIRCLE,
+        POLYGON, STAR, FILL, OPACITY, SMOOTH, GRADIENT, PLAYSOUND, SHOWIMAGE,
+        SHOWIMAGE, SHOWVIDEO, STOPVIDEO, WRITE, HEADING, TOWARDS, RGB, RANDOM, SQRT, POW,
+        LN, INTEGER, ROUND, CEIL, MOD, LINE, RECT, ELIP,   TABLEAU, AJOUTE, MODIFIE, LIS, SUPPRIME, TAILLE, VIDE, TEXTE,
