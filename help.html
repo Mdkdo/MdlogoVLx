@@ -258,6 +258,25 @@
             .main-content { overflow: visible; }
             .container { padding: 20px; }
         }
+		.copy-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.copy-btn:hover {
+    background: #2980b9;
+}
+
+.copy-btn.copied {
+    background: #16a34a;
+}
     </style>
 </head>
 <body>
@@ -814,25 +833,55 @@ ARBRE 100 <span class="comment">// Lance la génération</span></pre>
     </div>
 
     <script>
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        }, { passive: true });
-    </script>
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    }, { passive: true });
+
+    // Ajout automatique des boutons Copier
+    document.querySelectorAll('.example-block').forEach(block => {
+        const header = block.querySelector('.example-header');
+        const code = block.querySelector('.example');
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = '📋 Copier';
+
+        btn.addEventListener('click', async () => {
+            const texte = code.innerText;
+
+            try {
+                await navigator.clipboard.writeText(texte);
+
+                btn.textContent = '✓ Copié';
+                btn.classList.add('copied');
+
+                setTimeout(() => {
+                    btn.textContent = '📋 Copier';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Impossible de copier.');
+            }
+        });
+
+        header.appendChild(btn);
+    });
+</script>
 </body>
 </html>
